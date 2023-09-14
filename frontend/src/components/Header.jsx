@@ -1,5 +1,5 @@
 import {Navbar, Nav, Container, NavDropdown, Badge} from 'react-bootstrap'
-import {FaSignInAlt, FaSignOutAlt} from 'react-icons/fa'
+import {FaChartPie, FaLaptopHouse, FaSignInAlt, FaSignOutAlt} from 'react-icons/fa'
 import { useSelector, useDispatch} from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import React from 'react'
@@ -24,16 +24,29 @@ const Header = () => {
   return (
     <>
         <header>
-            <Navbar bg='dark' variant='dark' expand='sm' collapseOnSelect>
+            <Navbar bg='dark' variant='dark' expand='sm' className='fixed-top' collapseOnSelect>
                 <Container>
                     <LinkContainer to='/'>
-                        <Navbar.Brand>Capstone App</Navbar.Brand>
+                        <Navbar.Brand>ITMS</Navbar.Brand>
                     </LinkContainer>
                     <Navbar.Toggle aria-controls='basic-navbar-nav' />
                     <Navbar.Collapse id='basic-navbar-nav'>
                         <Nav className='ms-auto'>
                             { userInfo ? (
                                 <>
+                                    <LinkContainer to='/'>
+                                        <Nav.Link>
+                                            <FaChartPie /> Dashboard
+                                        </Nav.Link>
+                                    </LinkContainer>
+
+                                    <LinkContainer to='/devices'>
+                                        <Nav.Link>
+                                            <FaLaptopHouse /> Devices
+                                        </Nav.Link>
+                                    </LinkContainer>
+
+                                    {/* //DROPDOWN LINKS */}
                                     <NavDropdown title={userInfo.name} id='username'>
                                         <LinkContainer to='/profile'>
                                             <NavDropdown.Item>

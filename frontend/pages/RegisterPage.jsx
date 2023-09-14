@@ -1,9 +1,8 @@
-import React from 'react'
-import { useState, useEffect } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
-import { Form, Button, Row, Col } from 'react-bootstrap'
+import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { Form, Button } from 'react-bootstrap'
 import FormContainer from '../src/components/FormContainer'
-import { useSelector, useDispatch } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { toast } from 'react-toastify'
 import Loader from '../src/components/Loader'
 import { useRegisterMutation } from '../src/slices/usersApiSlice'
@@ -18,15 +17,9 @@ const RegisterPage = () => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
 
-    const { userInfo } = useSelector((state) => state.auth)
+    // const { userInfo } = useSelector((state) => state.auth)
 
     const [register, {isLoading}] = useRegisterMutation()
-
-    useEffect(() => {
-        if(userInfo){
-            navigate('/')
-        }
-    }, [navigate, userInfo])
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -84,12 +77,6 @@ const RegisterPage = () => {
                 <Button type='submit' variant='primary' className='mt-3'>
                     Sign Up
                 </Button>
-
-                <Row className='py-3'>
-                    <Col>
-                        Already have an account? <Link to='/login'>Sign In</Link>
-                    </Col>
-                </Row>
             </Form>
         </FormContainer>
     </>

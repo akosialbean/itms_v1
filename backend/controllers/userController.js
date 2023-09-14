@@ -67,7 +67,7 @@ const logoutUser = asyncHandler(async (req, res) => {
         expires: new Date(0)
     })
 
-    res.json(200).json({message: 'Logged out'})
+    res.status(200).json({message: 'Logged out'})
 })
 
 //User Get user profile
@@ -79,7 +79,7 @@ const getUserProfile = asyncHandler(async (req, res) => {
         name: req.user.name,
         email: req.user.email
     }
-    res.json(200).json(user)
+    res.status(200).json(user)
 })
 
 
@@ -109,7 +109,7 @@ const updateUserProfile = asyncHandler(async (req, res) => {
         throw new Error('User not found')
     }
 
-    res.json(200).json({message: 'Update user profile'})
+    res.status(200).json({message: 'Update user profile'})
 })
 
 

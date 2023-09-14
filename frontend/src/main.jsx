@@ -11,6 +11,8 @@ import LoginPage from '../pages/LoginPage.jsx'
 import RegisterPage from '../pages/RegisterPage.jsx'
 import ProfilePage from '../pages/ProfilePage.jsx'
 import PrivateRoute from './components/PrivateRoute.jsx'
+import Devices from '../pages/Devices.jsx'
+import AddDevice from '../pages/AddDevice.jsx'
 
 // PAGES
 const router = createBrowserRouter(
@@ -18,10 +20,12 @@ const router = createBrowserRouter(
     <Route path='/' element={ <App /> }>
       <Route index={true} path='/' element={ <Home />} />
       <Route path='/login' element={ <LoginPage />} />
-      <Route path='/register' element={ <RegisterPage />} />
       {/* PRIVATE ROUTES */}
       <Route path='' element={<PrivateRoute />}>
+        <Route path='/register' element={ <RegisterPage />} />
         <Route path='/profile' element={ <ProfilePage />} />
+        <Route path='/devices' element={ <Devices />} />
+        <Route path='/devices/add' element={ <AddDevice />} />
       </Route>
     </Route>
   )

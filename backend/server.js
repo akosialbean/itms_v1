@@ -8,6 +8,7 @@ import connectDB from './config/db.js'
 const port = process.env.port || 5000
 
 import userRoutes from './routes/userRoutes.js'
+import deviceRoutes from './routes/deviceRoutes.js'
 
 connectDB()
 
@@ -19,6 +20,7 @@ app.use(express.urlencoded({extended: true}))
 app.use(cookieParser())
 
 app.use('/api/users', userRoutes)
+app.use('/api/devices', deviceRoutes)
 
 if(process.env.NODE_ENV === 'production'){
     const __dirname = path.resolved()
@@ -29,8 +31,6 @@ if(process.env.NODE_ENV === 'production'){
         res.send('Server is ready!')
     })
 }
-
-
 
 app.use(notFound)
 app.use(errorHandler)
