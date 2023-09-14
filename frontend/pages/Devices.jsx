@@ -15,7 +15,7 @@ const Devices = () => {
         'Content-Type': 'application/json'
       }
     }
-    await fetch(url, requestOptions)
+    fetch(url, requestOptions)
       .then((response) => response.json())
       .then((json) => setDevices(json))
   }, [])
