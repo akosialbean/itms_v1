@@ -46,7 +46,14 @@ const getDevices = asyncHandler(async (req, res) => {
     res.status(200).json(devices)
 })
 
+const getDevice = asyncHandler(async (req, res) => {
+    const device = await Device.findOne({_id: req.params.id})
+    res.header('Access-Control-Allow-Origin', '*')
+    res.status(200).json(device)
+})
+
 export {
     addDevice,
-    getDevices
+    getDevices,
+    getDevice
 }
