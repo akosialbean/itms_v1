@@ -13,6 +13,7 @@ import ProfilePage from '../pages/ProfilePage.jsx'
 import PrivateRoute from './components/PrivateRoute.jsx'
 import Devices from '../pages/Devices.jsx'
 import AddDevice from '../pages/AddDevice.jsx'
+import Device from '../pages/Device.jsx'
 
 // PAGES
 const router = createBrowserRouter(
@@ -26,6 +27,7 @@ const router = createBrowserRouter(
         <Route path='/profile' element={ <ProfilePage />} />
         <Route path='/devices' element={ <Devices />} />
         <Route path='/devices/add' element={ <AddDevice />} />
+        <Route path='/devices/device/:id' element={ <Device />} />
       </Route>
     </Route>
   )
