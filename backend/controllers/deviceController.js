@@ -52,6 +52,11 @@ const getDevice = asyncHandler(async (req, res) => {
     res.status(200).json(device)
 })
 
+const updateDevice = asyncHandler(async (req, res) => {
+    res.header('Access-Control-Allow-Origin', '*')
+    res.status(200).json({message: 'connected'})
+})
+
 export {
     addDevice,
     getDevices,
