@@ -39,7 +39,7 @@ const Devices = () => {
             {/* //AXIOS */}
             {devices.length > 0 ?
             (<Row className='mt-3'>
-              {devices.map((device) =>(
+              {devices.map((device) => (
               <Col xs={12} s={12} md={3} lg={3} className='mb-4' key={device._id}>
                 <LinkContainer to={`/devices/device/${device._id}`} style={{width:'100%'}}>
                   <Button variant='light' className='shadow'>
