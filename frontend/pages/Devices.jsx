@@ -1,27 +1,28 @@
 import React, { useEffect, useState } from 'react'
-import { Container, Card, Row, Button, Col } from 'react-bootstrap'
+import { Container, Card, Row, Button, Col, Table } from 'react-bootstrap'
 import CardHeader from 'react-bootstrap/esm/CardHeader'
-import { FaDesktop, FaLaptop } from 'react-icons/fa'
-import { LinkContainer } from 'react-router-bootstrap'
+import { FaDesktop, FaLaptop, FaMobile, FaMobileAlt, FaPhone } from 'react-icons/fa'
+import { Link, LinkContainer } from 'react-router-bootstrap'
+import axios from 'axios'
+
 
 const Devices = () => {
-  const [devices, setDevices] = useState([]);
+  //PULLING DATA USING AXIOS
+  const getDevices = () => {
+    return axios.get('http://localhost:8000/api/devices')
+  }
+
+  const [devices, setDevices] = useState([])
 
   useEffect(() => {
-    const url = 'http://localhost:8000/api/devices'
-    const requestOptions = {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    }
-    await fetch(url, requestOptions)
-      .then((response) => response.json())
-      .then((json) => setDevices(json))
+    getDevices().then((response) => {
+      setDevices(response.data)
+    })
   }, [])
+  //PULLING DATA USING AXIOS
   return (
     <>
-      <Container className='mt-5'>
+      <Container className='mt-5 pt-5'>
         <Card>
           <CardHeader>
             <Card.Title>Devices</Card.Title>
@@ -34,90 +35,50 @@ const Devices = () => {
                 </LinkContainer>
               </Col>
             </Row>
-
-            <Row className='mt-3'>
-              <Col xs={12} s={12} md={3} lg={3}>
-              <ul>
-                {devices.map((device) => (
-                  <li key={device._id}>{device.d_type}</li>
-                ))}
-              </ul>
-
-                <Card>
-                  <Card.Body className='border'>
+            
+            {/* //AXIOS */}
+            {devices.length > 0 ?
+            (<Row className='mt-3'>
+              {devices.map((device) =>(
+              <Col xs={12} s={12} md={3} lg={3} className='mb-4' key={device._id}>
+                <LinkContainer to={`/devices/device/${device._id}`} style={{width:'100%'}}>
+                  <Button variant='light' className='shadow'>
                     <Row>
-                      <Col xs={4} s={4} md={4} lg={4}>
-                        <FaLaptop />
-                        <FaDesktop />
+                      <Col xs={4} s={4} md={4} lg={4} className='p-3 pe-5'>
+                        {
+                          device.d_type == 'Laptop' ? (
+                            <FaLaptop size={60}/>
+                          ) : ('')
+                        }
+                        {
+                          device.d_type == 'Desktop' ? (
+                            <FaDesktop size={60}/>
+                          ) : ('')
+                        }
+                        {
+                          device.d_type == 'Phone' ? (
+                            <FaMobileAlt size={60}/>
+                          ) : ('')
+                        }
+                        
                       </Col>
-                      <Col xs={8} s={8} md={8} lg={8}>
-                        WMCN0041<br/>
-                        Laptop<br/>
-                        Lenovo<br/>
-                        L390
+                      <Col xs={8} s={8} md={8} lg={8} className='p-2' style={{fontSize: '9px', textAlign: 'left'}}>
+                        <strong>{device.d_hostName}</strong><br/>
+                        {device.d_type}<br/>
+                        {device.d_brand}<br/>
+                        {device.d_model}<br/>
+                        {device.d_sn}<br/>
                       </Col>
                     </Row>
-                  </Card.Body>
-                </Card>
+                  </Button>
+                </LinkContainer>
               </Col>
-
-              <Col xs={12} s={12} md={3} lg={3}>
-                <Card>
-                  <Card.Body className='border'>
-                    <Row>
-                      <Col xs={4} s={4} md={4} lg={4}>
-                        <FaLaptop />
-                        <FaDesktop />
-                      </Col>
-                      <Col xs={8} s={8} md={8} lg={8}>
-                        WMCN0041<br/>
-                        Laptop<br/>
-                        Lenovo<br/>
-                        L390
-                      </Col>
-                    </Row>
-                  </Card.Body>
-                </Card>
-              </Col>
-
-              <Col xs={12} s={12} md={3} lg={3}>
-                <Card>
-                  <Card.Body className='border'>
-                    <Row>
-                      <Col xs={4} s={4} md={4} lg={4}>
-                        <FaLaptop />
-                        <FaDesktop />
-                      </Col>
-                      <Col xs={8} s={8} md={8} lg={8}>
-                        WMCN0041<br/>
-                        Laptop<br/>
-                        Lenovo<br/>
-                        L390
-                      </Col>
-                    </Row>
-                  </Card.Body>
-                </Card>
-              </Col>
-
-              <Col xs={12} s={12} md={3} lg={3}>
-                <Card>
-                  <Card.Body className='border'>
-                    <Row>
-                      <Col xs={4} s={4} md={4} lg={4}>
-                        <FaLaptop />
-                        <FaDesktop />
-                      </Col>
-                      <Col xs={8} s={8} md={8} lg={8}>
-                        WMCN0041<br/>
-                        Laptop<br/>
-                        Lenovo<br/>
-                        L390
-                      </Col>
-                    </Row>
-                  </Card.Body>
-                </Card>
-              </Col>
-            </Row>
+              ))}
+            </Row>)
+            :
+            (<h1>Loading...</h1>)
+            }
+            {/* //ENDAXIOS */}
           </Card.Body>
         </Card>
       </Container>

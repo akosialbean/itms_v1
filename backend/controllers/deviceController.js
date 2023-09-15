@@ -1,7 +1,6 @@
 import asyncHandler from 'express-async-handler'
 import Device from '../models/deviceModel.js'
 
-
 // ADDING OF DEVICE
 const addDevice = asyncHandler(async (req, res) => {
     const {
@@ -43,6 +42,7 @@ const addDevice = asyncHandler(async (req, res) => {
 
 const getDevices = asyncHandler(async (req, res) => {
     const devices = await Device.find()
+    res.header('Access-Control-Allow-Origin', '*')
     res.status(200).json(devices)
 })
 
