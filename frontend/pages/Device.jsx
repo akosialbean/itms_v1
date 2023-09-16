@@ -4,9 +4,10 @@ import CardHeader from 'react-bootstrap/esm/CardHeader'
 import axios from 'axios'
 import { useParams, useNavigate } from 'react-router-dom'
 import { FaDesktop, FaLaptop, FaMobileAlt } from 'react-icons/fa'
-import { useUpdateMutation } from '../src/slices/deviceApiSlice'
+import { useUpdateMutation} from '../src/slices/deviceApiSlice'
 import { toast } from 'react-toastify'
 import { useDispatch } from 'react-redux'
+import Loader from '../src/components/Loader'
 
 const Device = () => {
     const getDevice = () => {
@@ -23,23 +24,7 @@ const Device = () => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
 
-    const handleSubmit = async (e) => {
-        e.preventDefault()
-        try{
-            const res = await updateDevice({
-                d_type: d_type,
-                d_brand: d_brand,
-                d_model: d_model,
-                d_sn: d_sn,
-                d_hostName: d_hostName
-            }).unwrap()
-            dispatch(updateDevice(...res))
-            toast.success('Device details updated!')
-            navigate('/devices')
-        }catch(err){
-            toast.error(err?.data?.message || err.error)
-        }
-    }
+    const [update, {isLoading}] = useUpdateMutation()
 
     useEffect(() => {
         getDevice().then((response) => {
@@ -52,7 +37,30 @@ const Device = () => {
         })
     }, [])
 
-    
+    const handleSubmit = async (e) => {
+        e.preventDefault()
+        try{
+            const res = await update({
+                id,
+                d_type,
+                d_brand,
+                d_model,
+                d_sn,
+                d_hostName
+            }).unwrap()
+            console.log({...res})
+            const updated = dispatch(useUpdateMutation({...res}))
+            if(updated){
+                toast.success('Device details updated!')
+            }else{
+                toast.failed('Device details update failed!')
+            }
+            
+            navigate('/devices')
+        }catch(err){
+            toast.error(err?.data?.message || err.error)
+        }
+    }
 
   return (
     <>
@@ -123,7 +131,7 @@ const Device = () => {
                                         onChange={(e) => setHostName(e.target.value)}></Form.Control>
                                     </Form.Group>
 
-                                    {/* {isLoading && <Loader />} */}
+                                    {isLoading && <Loader />}
 
                                     <Button type='submit' variant='primary' className='mt-3'>
                                         Update Device

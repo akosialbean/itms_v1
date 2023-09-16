@@ -11,8 +11,8 @@ export const devicesApiSlice = apiSlice.injectEndpoints({
             })
         }),
         update: builder.mutation({
-            query: (data) => ({
-                url: `${DEVICE_URL}/update`,
+            query: ({id, data}) => ({
+                url: `${DEVICE_URL}/device/update/${id}`,
                 method: 'PUT',
                 body: data
             })
