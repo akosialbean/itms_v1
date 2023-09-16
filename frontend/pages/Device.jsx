@@ -48,17 +48,17 @@ const Device = () => {
                         <Row>
                             <Col xs={12} s={12} md={3} lg={3} className='text-center'>
                                 {
-                                d_type == 'Laptop' ? (
+                                device.d_type == 'Laptop' ? (
                                     <FaLaptop size={100}/>
                                 ) : ('')
                                 }
                                 {
-                                d_type == 'Desktop' ? (
+                                device.d_type == 'Desktop' ? (
                                     <FaDesktop size={100}/>
                                 ) : ('')
                                 }
                                 {
-                                d_type == 'Phone' ? (
+                                device.d_type == 'Phone' ? (
                                     <FaMobileAlt size={100}/>
                                 ) : ('')
                                 }
@@ -70,7 +70,7 @@ const Device = () => {
                                     <Form.Group className='my-2' controlId='d_type'>
                                         <Form.Label>Type</Form.Label>
                                         <Form.Select onChange={(e) => setDeviceType(e.target.value)} required>
-                                            <option value='{d_type}'>{d_type}</option>
+                                            <option value='{device.d_type}'>{device.d_type}</option>
                                             <option value='Desktop'>Desktop</option>
                                             <option value='Laptop'>Laptop</option>
                                             <option value='Phone'>Phone</option>
@@ -80,28 +80,28 @@ const Device = () => {
                                     <Form.Group className='my-2' controlId='d_brand'>
                                         <Form.Label>Brand</Form.Label>
                                         <Form.Control type='text' placeholder='Lenovo'
-                                        value={d_brand}
+                                        value={device.d_brand}
                                         onChange={(e) => setDeviceBrand(e.target.value)}></Form.Control>
                                     </Form.Group>
 
                                     <Form.Group className='my-2' controlId='d_model'>
                                         <Form.Label>Model</Form.Label>
                                         <Form.Control type='text' placeholder='L390'
-                                        value={d_model}
+                                        value={device.d_model}
                                         onChange={(e) => setDeviceModel(e.target.value)}></Form.Control>
                                     </Form.Group>
 
                                     <Form.Group className='my-2' controlId='d_sn'>
                                         <Form.Label>Serial Number</Form.Label>
                                         <Form.Control type='text' placeholder='DKFUSS923D'
-                                        value={d_sn}
+                                        value={device.d_sn}
                                         onChange={(e) => setSerialNumber(e.target.value)}></Form.Control>
                                     </Form.Group>
 
                                     <Form.Group className='my-2' controlId='d_hostName'>
                                         <Form.Label>Host Name</Form.Label>
                                         <Form.Control type='text' placeholder='DKFUSS923D'
-                                        value={d_hostName}
+                                        value={device.d_hostName}
                                         onChange={(e) => setHostName(e.target.value)}></Form.Control>
                                     </Form.Group>
 
