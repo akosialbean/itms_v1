@@ -6,6 +6,6 @@ import { addDevice, getDevices, getDevice, updateDevice } from "../controllers/d
 router.get('/', getDevices)
 router.post('/add', addDevice)
 router.get('/device/:id', getDevice)
-router.post('/device/:id', updateDevice)
+router.put('/device/update/:id', updateDevice)
 
 export default router

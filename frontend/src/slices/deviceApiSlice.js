@@ -9,8 +9,15 @@ export const devicesApiSlice = apiSlice.injectEndpoints({
                 method: 'POST',
                 body: data
             })
+        }),
+        update: builder.mutation({
+            query: (data) => ({
+                url: `${DEVICE_URL}/update`,
+                method: 'PUT',
+                body: data
+            })
         })
     })
 })
 
-export const { useAddMutation } = devicesApiSlice
+export const { useAddMutation, useUpdateMutation } = devicesApiSlice

@@ -1,41 +1,59 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Button, Card, Col, Container, Form, Row } from 'react-bootstrap'
 import CardHeader from 'react-bootstrap/esm/CardHeader'
 import axios from 'axios'
-import { useParams } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 import { FaDesktop, FaLaptop, FaMobileAlt } from 'react-icons/fa'
+import { useUpdateMutation } from '../src/slices/deviceApiSlice'
+import { toast } from 'react-toastify'
+import { useDispatch } from 'react-redux'
 
 const Device = () => {
-    
+    const getDevice = () => {
+        return axios.get(`http://localhost:8000/api/devices/device/${id}`)
+    }
     const id = useParams().id
-    const [device, setDevice] = useState([])
+    const [device, setDevice] = useState({})
     const [d_type, setDeviceType] = useState('')
     const [d_brand, setDeviceBrand] = useState('')
     const [d_model, setDeviceModel] = useState('')
     const [d_sn, setSerialNumber] = useState('')
     const [d_hostName, setHostName] = useState('')
-    
-    const handleSubmit = (e) => {
-        alert('testing submit')
+
+    const navigate = useNavigate()
+    const dispatch = useDispatch()
+
+    const handleSubmit = async (e) => {
+        e.preventDefault()
+        try{
+            const res = await updateDevice({
+                d_type: d_type,
+                d_brand: d_brand,
+                d_model: d_model,
+                d_sn: d_sn,
+                d_hostName: d_hostName
+            }).unwrap()
+            dispatch(updateDevice(...res))
+            toast.success('Device details updated!')
+            navigate('/devices')
+        }catch(err){
+            toast.error(err?.data?.message || err.error)
+        }
     }
 
     useEffect(() => {
-        const getDevice = () => {
-            return axios.get(`http://localhost:8000/api/devices/device/${id}`)
-        }
-
         getDevice().then((response) => {
             setDevice(response.data)
+            setDeviceType(response.data.d_type)
+            setDeviceBrand(response.data.d_brand)
+            setDeviceModel(response.data.d_model)
+            setSerialNumber(response.data.d_sn)
+            setHostName(response.data.d_hostName)
         })
-
-        setDeviceType(device.d_type)
-        setDeviceBrand(device.d_brand)
-        setDeviceModel(device.d_model)
-        setSerialNumber(device.d_sn)
-        setHostName(device.d_hostName)
     }, [])
+
     
-    
+
   return (
     <>
         <Container>
@@ -48,17 +66,17 @@ const Device = () => {
                         <Row>
                             <Col xs={12} s={12} md={3} lg={3} className='text-center'>
                                 {
-                                d_type == 'Laptop' ? (
+                                d_type === 'Laptop' ? (
                                     <FaLaptop size={100}/>
                                 ) : ('')
                                 }
                                 {
-                                d_type == 'Desktop' ? (
+                                d_type === 'Desktop' ? (
                                     <FaDesktop size={100}/>
                                 ) : ('')
                                 }
                                 {
-                                d_type == 'Phone' ? (
+                                d_type === 'Phone' ? (
                                     <FaMobileAlt size={100}/>
                                 ) : ('')
                                 }
@@ -70,7 +88,7 @@ const Device = () => {
                                     <Form.Group className='my-2' controlId='d_type'>
                                         <Form.Label>Type</Form.Label>
                                         <Form.Select onChange={(e) => setDeviceType(e.target.value)} required>
-                                            <option value='{d_type}'>{d_type}</option>
+                                            <option value={d_type}>{d_type}</option>
                                             <option value='Desktop'>Desktop</option>
                                             <option value='Laptop'>Laptop</option>
                                             <option value='Phone'>Phone</option>

@@ -52,8 +52,9 @@ const getDevice = asyncHandler(async (req, res) => {
     res.status(200).json(device)
 })
 
-const updateDevice = asyncHandler(async (req, res) => {
-    const device = await Device.findById(req.device._id)
+const updateDevice = asyncHandler(async (req, res, {id}) => {
+    const device = await Device.findById(req.params.id)
+    // res.send(device)
     res.header('Access-Control-Allow-Origin', '*')
     
 
@@ -79,6 +80,7 @@ const updateDevice = asyncHandler(async (req, res) => {
         throw new Error('Device not found')
     }
     res.status(200).json({message: 'Device details updated'})
+    res.send('Updating record')
 })
 
 export {
