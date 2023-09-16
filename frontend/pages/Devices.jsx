@@ -22,7 +22,7 @@ const Devices = () => {
   //PULLING DATA USING AXIOS
   return (
     <>
-      <Container className='mt-5 pt-5'>
+      <Container>
         <Card>
           <CardHeader>
             <Card.Title>Devices</Card.Title>
@@ -60,8 +60,8 @@ const Devices = () => {
                             <FaMobileAlt size={60}/>
                           ) : ('')
                         }
-                        
                       </Col>
+
                       <Col xs={8} s={8} md={8} lg={8} className='p-2' style={{fontSize: '9px', textAlign: 'left'}}>
                         <strong>{device.d_hostName}</strong><br/>
                         {device.d_type}<br/>

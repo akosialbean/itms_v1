@@ -10,7 +10,7 @@ const Home = () => {
     <>
       {userInfo ? (
         <>
-          <Container className='mt-5'>
+          <Container>
             <Row>
 
               <Col xs={12} md={2} lg={2}>

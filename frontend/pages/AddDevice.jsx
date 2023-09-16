@@ -42,9 +42,12 @@ const AddDevice = () => {
             <Form onSubmit={handleSubmit}>
                 <Form.Group className='my-2' controlId='d_type'>
                     <Form.Label>Type</Form.Label>
-                    <Form.Control type='text' placeholder='Laptop'
-                    value={d_type}
-                    onChange={(e) => setDeviceType(e.target.value)}></Form.Control>
+                    <Form.Select onChange={(e) => setDeviceType(e.target.value)} required>
+                        <option value=''>--</option>
+                        <option value='Desktop'>Desktop</option>
+                        <option value='Laptop'>Laptop</option>
+                        <option value='Phone'>Phone</option>
+                    </Form.Select>
                 </Form.Group>
 
                 <Form.Group className='my-2' controlId='d_brand'>
