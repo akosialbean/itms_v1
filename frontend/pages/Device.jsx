@@ -18,6 +18,8 @@ const Device = () => {
     const [d_sn, setSerialNumber] = useState('')
     const [d_hostName, setHostName] = useState('')
 
+    const [isButtonDisabled, setIsButtonDisabled] = useState(false);
+
     const getDevice = () => {
         return axios.get(`http://localhost:8000/api/devices/device/${id}`)
     }
@@ -38,6 +40,10 @@ const Device = () => {
         })
         
     }, [])
+    
+    const handleClick = (e) => {
+        setIsButtonDisabled(true);
+    }
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -54,8 +60,12 @@ const Device = () => {
                 id,
                 updateData
             }).unwrap()
-
-            await dispatch(useUpdateMutation({...res}))
+            const updated = await dispatch(useUpdateMutation({...res}))
+            if(!updated.error){
+                toast.success('Device information updated!')
+            }else{
+                toast.error('Device information update failed!')
+            }
         }catch(err){
             toast.error(err?.data?.message || err.error)
         }
@@ -133,7 +143,7 @@ const Device = () => {
 
                                     {isLoading && <Loader />}
 
-                                    <Button type='submit' variant='primary' className='mt-3'>
+                                    <Button type='submit' variant='primary' className='mt-3' onClick={handleClick} disabled={isButtonDisabled}>
                                         Update Device
                                     </Button>
                                 </Form>
