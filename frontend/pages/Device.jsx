@@ -10,9 +10,6 @@ import { useDispatch } from 'react-redux'
 import Loader from '../src/components/Loader'
 
 const Device = () => {
-    const getDevice = () => {
-        return axios.get(`http://localhost:8000/api/devices/device/${id}`)
-    }
     const id = useParams().id
     const [device, setDevice] = useState({})
     const [d_type, setDeviceType] = useState('')
@@ -20,6 +17,10 @@ const Device = () => {
     const [d_model, setDeviceModel] = useState('')
     const [d_sn, setSerialNumber] = useState('')
     const [d_hostName, setHostName] = useState('')
+
+    const getDevice = () => {
+        return axios.get(`http://localhost:8000/api/devices/device/${id}`)
+    }
 
     const navigate = useNavigate()
     const dispatch = useDispatch()
@@ -35,31 +36,30 @@ const Device = () => {
             setSerialNumber(response.data.d_sn)
             setHostName(response.data.d_hostName)
         })
+        
     }, [])
 
     const handleSubmit = async (e) => {
         e.preventDefault()
+        const updateData = {
+            id,
+            d_type,
+            d_brand,
+            d_model,
+            d_sn,
+            d_hostName
+        }
         try{
             const res = await update({
                 id,
-                d_type,
-                d_brand,
-                d_model,
-                d_sn,
-                d_hostName
+                updateData
             }).unwrap()
-            console.log({...res})
-            const updated = dispatch(useUpdateMutation({...res}))
-            if(updated){
-                toast.success('Device details updated!')
-            }else{
-                toast.failed('Device details update failed!')
-            }
-            
-            navigate('/devices')
+
+            await dispatch(useUpdateMutation({...res}))
         }catch(err){
             toast.error(err?.data?.message || err.error)
         }
+        navigate('/devices')
     }
 
   return (

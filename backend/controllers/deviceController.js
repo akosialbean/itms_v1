@@ -55,7 +55,7 @@ const getDevice = asyncHandler(async (req, res) => {
 const updateDevice = asyncHandler(async (req, res, {id}) => {
     const device = await Device.findById(req.params.id)
     // res.send(device)
-    res.header('Access-Control-Allow-Origin', '*')
+    // res.header('Access-Control-Allow-Origin', '*')
     
 
     if(device){
