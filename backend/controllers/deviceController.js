@@ -41,7 +41,7 @@ const addDevice = asyncHandler(async (req, res) => {
 })
 
 const getDevices = asyncHandler(async (req, res) => {
-    const devices = await Device.find().sort({d_hostName: 1})
+    const devices = await Device.find()
     res.header('Access-Control-Allow-Origin', '*')
     res.status(200).json(devices)
 })
@@ -52,40 +52,13 @@ const getDevice = asyncHandler(async (req, res) => {
     res.status(200).json(device)
 })
 
-const updateDevice = asyncHandler(async (req, res, {id}) => {
-    const device = await Device.findById(req.params.id)
-    // res.send(device)
-    // res.header('Access-Control-Allow-Origin', '*')
-    
-
-    if(device){
-        device.d_type = req.body.d_type || device.d_type
-        device.d_brand = req.body.d_brand || device.d_brand
-        device.d_model = req.body.d_model || device.d_model
-        device.d_sn = req.body.d_sn || device.d_sn
-        device.d_hostName = req.body.d_hostName || device.d_hostName
-
-        const updatedDevice = await device.save()
-
-        res.status(200).json({
-            _id: updatedDevice._id,
-            d_type: updatedDevice.d_type,
-            d_brand: updatedDevice.d_brand,
-            d_model: updatedDevice.d_model,
-            d_sn: updatedDevice.d_sn,
-            d_hostname: updatedDevice.d_hostName,
-        })
-    }else{
-        res.status(404)
-        throw new Error('Device not found')
-    }
-    res.status(200).json({message: 'Device details updated'})
-    res.send('Updating record')
+const updateDevice = asyncHandler(async (req, res) => {
+    res.header('Access-Control-Allow-Origin', '*')
+    res.status(200).json({message: 'connected'})
 })
 
 export {
     addDevice,
     getDevices,
-    getDevice,
-    updateDevice
+    getDevice
 }
