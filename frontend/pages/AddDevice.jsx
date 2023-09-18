@@ -13,6 +13,11 @@ const AddDevice = () => {
   const [d_model, setDeviceModel] = useState('')
   const [d_sn, setSerialNumber] = useState('')
   const [d_hostName, setHostName] = useState('')
+  //NEW
+  const [d_ipAddress, seIpAddress] = useState('')
+  const [d_macAddress, setMacAddress] = useState('')
+  const [d_assignedToDepartment, setAssignedToDepartment] = useState('')
+  const [d_assignedToEmployee, setAssignedToEmployee] = useState('')
 
   const navigate = useNavigate()
   const dispatch = useDispatch()
@@ -85,6 +90,36 @@ const AddDevice = () => {
                 </Form.Group>
 
                 <hr />
+
+                <Form.Group className='my-2' controlId='d_ipAddress'>
+                    <Form.Label>IP Address</Form.Label>
+                    <Form.Control type='text' placeholder='0.0.0.0'
+                    value={d_ipAddress}
+                    onChange={(e) => setIpAddress(e.target.value)}></Form.Control>
+                </Form.Group>
+
+                <Form.Group className='my-2' controlId='d_macAddress'>
+                    <Form.Label>MAC Address</Form.Label>
+                    <Form.Control type='text' placeholder='00:00:00:00:00'
+                    value={d_macAddress}
+                    onChange={(e) => setMacAddress(e.target.value)}></Form.Control>
+                </Form.Group>
+
+                <hr />
+
+                <Form.Group className='my-2' controlId='d_assignedToDepartment'>
+                    <Form.Label>Assigned to Department (Multiple Users)</Form.Label>
+                    <Form.Control type='text' placeholder='Department Name'
+                    value={d_assignedToDepartment}
+                    onChange={(e) => setAssignedToDepartment(e.target.value)}></Form.Control>
+                </Form.Group>
+
+                <Form.Group className='my-2' controlId='d_assignedToEmployee'>
+                    <Form.Label>Assigned to Employee (Dedicated User)</Form.Label>
+                    <Form.Control type='text' placeholder='Employee Name'
+                    value={d_assignedToEmployee}
+                    onChange={(e) => setAssignedToEmployee(e.target.value)}></Form.Control>
+                </Form.Group>
 
                 {isLoading && <Loader />}
 

@@ -60,5 +60,6 @@ const updateDevice = asyncHandler(async (req, res) => {
 export {
     addDevice,
     getDevices,
-    getDevice
+    getDevice,
+    updateDevice
 }
