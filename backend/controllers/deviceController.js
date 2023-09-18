@@ -103,9 +103,23 @@ const updateDevice = asyncHandler(async (req, res, {id}) => {
     res.send('Updating record')
 })
 
+const getDesktopCount = asyncHandler(async(req, res) =>{
+    const device = await Device.countDocuments({d_type: 'Desktop'})
+    res.header('Access-Control-Allow-Origin', '*')
+    res.status(200).json(device)
+})
+
+const getLaptopCount = asyncHandler(async(req, res) =>{
+    const device = await Device.countDocuments({d_type: 'Laptop'})
+    res.header('Access-Control-Allow-Origin', '*')
+    res.status(200).json(device)
+})
+
 export {
     addDevice,
     getDevices,
     getDevice,
-    updateDevice
+    updateDevice,
+    getDesktopCount,
+    getLaptopCount
 }
