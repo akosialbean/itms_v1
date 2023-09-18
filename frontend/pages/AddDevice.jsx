@@ -14,7 +14,7 @@ const AddDevice = () => {
   const [d_sn, setSerialNumber] = useState('')
   const [d_hostName, setHostName] = useState('')
   //NEW
-  const [d_ipAddress, seIpAddress] = useState('')
+  const [d_ipAddress, setIpAddress] = useState('')
   const [d_macAddress, setMacAddress] = useState('')
   const [d_assignedToDepartment, setAssignedToDepartment] = useState('')
   const [d_assignedToEmployee, setAssignedToEmployee] = useState('')
@@ -38,7 +38,11 @@ const AddDevice = () => {
           d_brand,
           d_model,
           d_sn,
-          d_hostName
+          d_hostName,
+          d_ipAddress,
+          d_macAddress,
+          d_assignedToDepartment,
+          d_assignedToEmployee
         }).unwrap()
         dispatch(useAddMutation({...res}))
     }catch(err){

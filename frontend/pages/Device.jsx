@@ -17,6 +17,11 @@ const Device = () => {
     const [d_model, setDeviceModel] = useState('')
     const [d_sn, setSerialNumber] = useState('')
     const [d_hostName, setHostName] = useState('')
+    //NEW
+    const [d_ipAddress, setIpAddress] = useState('')
+    const [d_macAddress, setMacAddress] = useState('')
+    const [d_assignedToDepartment, setAssignedToDepartment] = useState('')
+    const [d_assignedToEmployee, setAssignedToEmployee] = useState('')
 
     const [isButtonDisabled, setIsButtonDisabled] = useState(false);
 
@@ -37,6 +42,10 @@ const Device = () => {
             setDeviceModel(response.data.d_model)
             setSerialNumber(response.data.d_sn)
             setHostName(response.data.d_hostName)
+            setIpAddress(response.data.d_ipAddress)
+            setMacAddress(response.data.d_macAddress)
+            setAssignedToDepartment(response.data.d_assignedToDepartment)
+            setAssignedToEmployee(response.data.d_assignedToEmployee)
         })
         
     }, [])
@@ -53,14 +62,20 @@ const Device = () => {
             d_brand,
             d_model,
             d_sn,
-            d_hostName
+            d_hostName,
+            d_ipAddress,
+            d_macAddress,
+            d_assignedToDepartment,
+            d_assignedToEmployee
         }
+        // console.log(updateData)
         try{
             const res = await update({
                 id,
                 updateData
             }).unwrap()
-            const updated = await dispatch(useUpdateMutation({...res}))
+            console.log(res)
+            const updated = await dispatch(useUpdateMutation(...res))
             if(!updated.error){
                 toast.success('Device information updated!')
             }else{
@@ -139,6 +154,38 @@ const Device = () => {
                                         <Form.Control type='text' placeholder='DKFUSS923D'
                                         value={d_hostName}
                                         onChange={(e) => setHostName(e.target.value)}></Form.Control>
+                                    </Form.Group>
+
+                                    <hr />
+
+                                    <Form.Group className='my-2' controlId='d_ipAddress'>
+                                        <Form.Label>IP Address</Form.Label>
+                                        <Form.Control type='text' placeholder='0.0.0.0'
+                                        value={d_ipAddress}
+                                        onChange={(e) => setIpAddress(e.target.value)}></Form.Control>
+                                    </Form.Group>
+
+                                    <Form.Group className='my-2' controlId='d_macAddress'>
+                                        <Form.Label>MAC Address</Form.Label>
+                                        <Form.Control type='text' placeholder='00:00:00:00:00'
+                                        value={d_macAddress}
+                                        onChange={(e) => setMacAddress(e.target.value)}></Form.Control>
+                                    </Form.Group>
+
+                                    <hr />
+
+                                    <Form.Group className='my-2' controlId='d_assignedToDepartment'>
+                                        <Form.Label>Assigned to Department (Multiple Users)</Form.Label>
+                                        <Form.Control type='text' placeholder='Department Name'
+                                        value={d_assignedToDepartment}
+                                        onChange={(e) => setAssignedToDepartment(e.target.value)}></Form.Control>
+                                    </Form.Group>
+
+                                    <Form.Group className='my-2' controlId='d_assignedToEmployee'>
+                                        <Form.Label>Assigned to Employee (Dedicated User)</Form.Label>
+                                        <Form.Control type='text' placeholder='Employee Name'
+                                        value={d_assignedToEmployee}
+                                        onChange={(e) => setAssignedToEmployee(e.target.value)}></Form.Control>
                                     </Form.Group>
 
                                     {isLoading && <Loader />}
