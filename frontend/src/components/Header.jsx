@@ -53,6 +53,11 @@ const Header = () => {
                                                 Profile
                                             </NavDropdown.Item>
                                         </LinkContainer>
+                                        <LinkContainer to='/register'>
+                                            <NavDropdown.Item>
+                                                Add new User
+                                            </NavDropdown.Item>
+                                        </LinkContainer>
                                         <NavDropdown.Item onClick={handleLogout}>
                                             Logout
                                         </NavDropdown.Item>

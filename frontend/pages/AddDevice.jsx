@@ -19,6 +19,12 @@ const AddDevice = () => {
 
   const [add, {isLoading}] = useAddMutation()
 
+  const [isDisabled, setIsDisabled] = useState(false)
+
+  const handleClick = (e) => {
+    setIsDisabled(true)
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault()
     try{
@@ -78,9 +84,11 @@ const AddDevice = () => {
                     onChange={(e) => setHostName(e.target.value)}></Form.Control>
                 </Form.Group>
 
+                <hr />
+
                 {isLoading && <Loader />}
 
-                <Button type='submit' variant='primary' className='mt-3'>
+                <Button type='submit' variant='primary' className='mt-3' onClick={handleClick} disabled={isDisabled}>
                     Add Device
                 </Button>
             </Form>
