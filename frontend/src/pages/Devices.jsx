@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Container, Card, Row, Button, Col, Table } from 'react-bootstrap'
 import CardHeader from 'react-bootstrap/esm/CardHeader'
-import { FaDesktop, FaLaptop, FaMobile, FaMobileAlt, FaPhone } from 'react-icons/fa'
+import { FaDesktop, FaLaptop, FaMobile, FaMobileAlt, FaPhone, FaPlus } from 'react-icons/fa'
 import { Link, LinkContainer } from 'react-router-bootstrap'
 import axios from 'axios'
 
@@ -28,10 +28,10 @@ const Devices = () => {
             <Card.Title>Devices</Card.Title>
           </CardHeader>
           <Card.Body>
-            <Row>
+            <Row className='justify-content-end'>
               <Col xs={12} md={12} lg={12}>
                 <LinkContainer to='/devices/add'>
-                  <Button variant='primary' className='btn-sm'>Add Device</Button>
+                  <Button variant='success' className='btn-sm'><FaPlus/>Add Device</Button>
                 </LinkContainer>
               </Col>
             </Row>
