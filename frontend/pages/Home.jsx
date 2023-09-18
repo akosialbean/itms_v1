@@ -23,14 +23,36 @@ const Home = () => {
       const response = await axios.get('http://localhost:8000/api/devices/dashboard/laptopCount');
       return response.data
     } catch (error) {
-      console.error('Error fetching desktop count:', error)
+      console.error('Error fetching laptop count:', error)
       return 0
     }
   }
 
-  // 3. Initialize desktopCount with useState
+  const phone = async () => {
+    try {
+      const response = await axios.get('http://localhost:8000/api/devices/dashboard/phoneCount');
+      return response.data
+    } catch (error) {
+      console.error('Error fetching phone count:', error)
+      return 0
+    }
+  }
+
+  const devices = async () => {
+    try {
+      const response = await axios.get('http://localhost:8000/api/devices/dashboard/deviceCount');
+      return response.data
+    } catch (error) {
+      console.error('Error fetching phone count:', error)
+      return 0
+    }
+  }
+
+  
   const [desktopCount, setDesktopCount] = useState('');
   const [laptopCount, setLaptopCount] = useState('');
+  const [phoneCount, setPhoneCount] = useState('');
+  const [deviceCount, setDeviceCount] = useState('');
 
   // 4. Use useEffect to fetch data when the component mounts
   useEffect(() => {
@@ -39,6 +61,12 @@ const Home = () => {
     });
     laptop().then((count) => {
       setLaptopCount(count)
+    });
+    phone().then((count) => {
+      setPhoneCount(count)
+    });
+    devices().then((count) => {
+      setDeviceCount(count)
     });
   }, [])
 
@@ -53,7 +81,7 @@ const Home = () => {
                 <Card className='card mt-3'>
                   <CardHeader>TOTAL DEVICES</CardHeader>
                   <Card.Body>
-                    1000
+                    {deviceCount}
                   </Card.Body>
                 </Card>
               </Col>
@@ -80,7 +108,7 @@ const Home = () => {
                 <Card className='card mt-3'>
                   <CardHeader>MOBILE PHONES</CardHeader>
                   <Card.Body>
-                    1000
+                    {phoneCount}
                   </Card.Body>
                 </Card>
               </Col>

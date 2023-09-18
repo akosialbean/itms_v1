@@ -115,11 +115,25 @@ const getLaptopCount = asyncHandler(async(req, res) =>{
     res.status(200).json(device)
 })
 
+const getPhoneCount = asyncHandler(async(req, res) =>{
+    const device = await Device.countDocuments({d_type: 'Phone'})
+    res.header('Access-Control-Allow-Origin', '*')
+    res.status(200).json(device)
+})
+
+const getDeviceCount = asyncHandler(async(req, res) =>{
+    const device = await Device.countDocuments()
+    res.header('Access-Control-Allow-Origin', '*')
+    res.status(200).json(device)
+})
+
 export {
     addDevice,
     getDevices,
     getDevice,
     updateDevice,
     getDesktopCount,
-    getLaptopCount
+    getLaptopCount,
+    getPhoneCount,
+    getDeviceCount
 }
