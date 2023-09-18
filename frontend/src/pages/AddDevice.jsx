@@ -3,9 +3,9 @@ import { Button, Form } from 'react-bootstrap'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
-import Loader from '../src/components/Loader'
-import FormContainer from '../src/components/FormContainer'
-import { useAddMutation } from '../src/slices/deviceApiSlice'
+import Loader from '../components/Loader'
+import FormContainer from '../components/FormContainer'
+import { useAddMutation } from '../slices/deviceApiSlice'
 
 const AddDevice = () => {
   const [d_type, setDeviceType] = useState('')

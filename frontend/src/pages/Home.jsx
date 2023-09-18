@@ -1,5 +1,5 @@
 import React from 'react'
-import Hero from '../src/components/Hero'
+import Hero from '../components/Hero'
 import { useSelector, useDispatch} from 'react-redux'
 import { Card, Col, Container, Row } from 'react-bootstrap'
 import CardHeader from 'react-bootstrap/esm/CardHeader'
@@ -13,7 +13,7 @@ const Home = () => {
           <Container>
             <Row>
 
-              <Col xs={12} md={2} lg={2}>
+              <Col xs={12 } md={2} lg={2}>
                 <Card className='card mt-3'>
                   <CardHeader>TOTAL DEVICES</CardHeader>
                   <Card.Body>

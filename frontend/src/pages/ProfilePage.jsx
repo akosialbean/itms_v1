@@ -1,14 +1,15 @@
-import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { Form, Button } from 'react-bootstrap'
-import FormContainer from '../src/components/FormContainer'
-import { useDispatch } from 'react-redux'
+import React from 'react'
+import { useState, useEffect } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+import FormContainer from '../components/FormContainer'
+import { useSelector, useDispatch } from 'react-redux'
 import { toast } from 'react-toastify'
-import Loader from '../src/components/Loader'
-import { useRegisterMutation } from '../src/slices/usersApiSlice'
-import { setCredentials } from '../src/slices/authSlice'
+import Loader from '../components/Loader'
+import { setCredentials } from '../slices/authSlice'
+import { Form, Button } from 'react-bootstrap'
+import { useUpdateUserMutation } from '../slices/usersApiSlice'
 
-const RegisterPage = () => {
+const ProfilePage = () => {
     const [name, setName] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
@@ -17,9 +18,14 @@ const RegisterPage = () => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
 
-    // const { userInfo } = useSelector((state) => state.auth)
+    const { userInfo } = useSelector((state) => state.auth)
 
-    const [register, {isLoading}] = useRegisterMutation()
+    const [updateProfile, {isLoading}] = useUpdateUserMutation()
+
+    useEffect(() => {
+        setName(userInfo.name)
+        setEmail(userInfo.email)
+    }, [userInfo.setName, userInfo.setEmail])
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -27,13 +33,14 @@ const RegisterPage = () => {
             toast.error('Passwords do not match')
         }else{
             try{
-                const res = await register({
+                const res = await updateProfile({
+                    _id: userInfo._id,
                     name,
                     email,
                     password
                 }).unwrap()
-                dispatch(setCredentials({...res}))
-                navigate('/')
+                dispatch(setCredentials(...res))
+                toast.success('Profile updated!')
             }catch(err){
                 toast.error(err?.data?.message || err.error)
             }
@@ -42,7 +49,7 @@ const RegisterPage = () => {
   return (
     <>
         <FormContainer>
-            <h1>Sign Up</h1>
+            <h1>Update Profile</h1>
             <Form onSubmit={handleSubmit}>
                 <Form.Group className='my-2' controlId='name'>
                     <Form.Label>Name</Form.Label>
@@ -75,7 +82,7 @@ const RegisterPage = () => {
                 {isLoading && <Loader />}
 
                 <Button type='submit' variant='primary' className='mt-3'>
-                    Sign Up
+                    Update Profile
                 </Button>
             </Form>
         </FormContainer>
@@ -83,4 +90,4 @@ const RegisterPage = () => {
   )
 }
 
-export default RegisterPage
+export default ProfilePage

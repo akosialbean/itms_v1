@@ -4,10 +4,10 @@ import CardHeader from 'react-bootstrap/esm/CardHeader'
 import axios from 'axios'
 import { useParams, useNavigate } from 'react-router-dom'
 import { FaDesktop, FaLaptop, FaMobileAlt } from 'react-icons/fa'
-import { useUpdateMutation} from '../src/slices/deviceApiSlice'
+import { useUpdateMutation} from '../slices/deviceApiSlice'
 import { toast } from 'react-toastify'
 import { useDispatch } from 'react-redux'
-import Loader from '../src/components/Loader'
+import Loader from '../components/Loader'
 
 const Device = () => {
     const id = useParams().id
