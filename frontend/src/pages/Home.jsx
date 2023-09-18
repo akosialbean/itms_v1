@@ -11,38 +11,38 @@ const Home = () => {
       {userInfo ? (
         <>
           <Container>
-            <Row>
+            <Row className='justify-content-center stats'>
 
-              <Col xs={12 } md={2} lg={2}>
+              <Col xs={12 } md={6} lg={6} xl={6}>
                 <Card className='card mt-3'>
-                  <CardHeader>TOTAL DEVICES</CardHeader>
+                  <CardHeader className='font-weight-bold'>TOTAL DEVICES</CardHeader>
                   <Card.Body>
                     1000
                   </Card.Body>
                 </Card>
               </Col>
 
-              <Col xs={12} md={2} lg={2}>
+              <Col xs={12} md={6} lg={6} xl={6}>
                 <Card className='card mt-3'>
-                  <CardHeader>DESKTOPS</CardHeader>
+                  <CardHeader className='font-weight-bold'>DESKTOPS</CardHeader>
                   <Card.Body>
                     1000
                   </Card.Body>
                 </Card>
               </Col>
 
-              <Col xs={12} md={2} lg={2}>
+              <Col xs={12} md={6} lg={6} xl={6}>
                 <Card className='card mt-3'>
-                  <CardHeader>LAPTOPS</CardHeader>
+                  <CardHeader className='font-weight-bold'>LAPTOPS</CardHeader>
                   <Card.Body>
                     1000
                   </Card.Body>
                 </Card>
               </Col>
 
-              <Col xs={12} md={2} lg={2}>
+              <Col xs={12} md={6} lg={6} xl={6}>
                 <Card className='card mt-3'>
-                  <CardHeader>MOBILE PHONES</CardHeader>
+                  <CardHeader className='font-weight-bold'>MOBILE PHONES</CardHeader>
                   <Card.Body>
                     1000
                   </Card.Body>
