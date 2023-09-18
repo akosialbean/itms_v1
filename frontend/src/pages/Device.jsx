@@ -42,7 +42,8 @@ const Device = () => {
     }, [])
     
     const handleClick = (e) => {
-        setIsButtonDisabled(true);
+        // setIsButtonDisabled(true);
+        console.log("Update Successfully, Redirected to Devices");
     }
 
     const handleSubmit = async (e) => {
