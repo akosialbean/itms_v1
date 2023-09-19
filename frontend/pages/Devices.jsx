@@ -35,14 +35,16 @@ const Devices = () => {
           </CardHeader>
           <Card.Body>
             <Row>
-              <Col xs={12} md={2} lg={2}>
+              <Col xs={12} md={12} lg={2} className='mb-2'>
                 <LinkContainer to='/devices/add'>
-                  <Button variant='success' className='btn-sm'><strong><FaPlusCircle /> Add Device</strong></Button>
+                  <div className="d-grip gap-2">
+                    <Button variant='success' className='btn-md' style={{width: '100%'}}><strong><FaPlusCircle /> Add Device</strong></Button>
+                  </div>
                 </LinkContainer>
               </Col>
-              <Col xs={12} md={10} lg={10}>
+              <Col xs={12} md={12} lg={10}>
                 <InputGroup>
-                  <Form.Control type='text' placeholder='search here' value={searchItem} onChange={(e) => setSearchItem(e.target.value)} autoFocus></Form.Control>
+                  <Form.Control className='form-control form-control-md' type='text' placeholder='search here' value={searchItem} onChange={(e) => setSearchItem(e.target.value)} autoFocus></Form.Control>
                 </InputGroup>
               </Col>
             </Row>

@@ -27,7 +27,7 @@ const Header = () => {
             <Navbar bg='dark' variant='dark' expand='sm' className='fixed-top' collapseOnSelect>
                 <Container>
                     <LinkContainer to='/'>
-                        <Navbar.Brand><Image src='../public/it.png' rounded style={{width:'45px'}} />ITMS</Navbar.Brand>
+                        <Navbar.Brand><Image src='../it.png' rounded style={{width:'45px'}} />ITMS</Navbar.Brand>
                     </LinkContainer>
                     <Navbar.Toggle aria-controls='basic-navbar-nav' />
                     <Navbar.Collapse id='basic-navbar-nav'>
