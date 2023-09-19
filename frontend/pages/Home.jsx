@@ -79,7 +79,7 @@ const Home = () => {
             <Row>
               <Col xs={12} md={3} lg={3}>
                 <Card className='card mt-3 text-center shadow'>
-                  <CardHeader className='bg-primary text-light py-5'><span className='h2'><strong><FaSun className='me-2' /> TOTAL DEVICES</strong></span></CardHeader>
+                  <CardHeader className='bg-primary text-light py-5'><span className='h4'><strong><FaSun className='me-2' /> TOTAL DEVICES</strong></span></CardHeader>
                   <Card.Body>
                     <span className='h1'><strong>{deviceCount}</strong></span>
                   </Card.Body>
@@ -88,7 +88,7 @@ const Home = () => {
 
               <Col xs={12} md={3} lg={3}>
                 <Card className='card mt-3 text-center shadow'>
-                  <CardHeader className='bg-warning text-light py-5'><span className='h2'><strong><FaDesktop className='me-2' /> DESKTOPS</strong></span></CardHeader>
+                  <CardHeader className='bg-warning text-light py-5'><span className='h4'><strong><FaDesktop className='me-2' /> DESKTOPS</strong></span></CardHeader>
                   <Card.Body>
                     <span className='h1'><strong>{desktopCount}</strong></span>
                   </Card.Body>
@@ -97,7 +97,7 @@ const Home = () => {
 
               <Col xs={12} md={3} lg={3}>
                 <Card className='card mt-3 text-center shadow'>
-                  <CardHeader className='bg-info text-light py-5'><span className='h2'><strong><FaLaptop className='me-2'/> LAPTOPS</strong></span></CardHeader>
+                  <CardHeader className='bg-info text-light py-5'><span className='h4'><strong><FaLaptop className='me-2'/> LAPTOPS</strong></span></CardHeader>
                   <Card.Body>
                     <span className='h1'><strong>{laptopCount}</strong></span>
                   </Card.Body>
@@ -106,7 +106,7 @@ const Home = () => {
 
               <Col xs={12} md={3} lg={3}>
                 <Card className='card mt-3 text-center shadow'>
-                  <CardHeader className='bg-secondary text-light py-5'><span className='h2'><strong><FaMobileAlt className='me-2'/> MOBILE PHONES</strong></span></CardHeader>
+                  <CardHeader className='bg-secondary text-light py-5'><span className='h4'><strong><FaMobileAlt className='me-2'/> MOBILE PHONES</strong></span></CardHeader>
                   <Card.Body>
                     <span className='h1'><strong>{phoneCount}</strong></span>
                   </Card.Body>
