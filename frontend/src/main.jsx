@@ -29,6 +29,7 @@ const router = createBrowserRouter(
         <Route path='/devices/add' element={ <AddDevice />} />
         <Route path='/devices/device/:id' element={ <Device />} />
         <Route path='/devices/device/update/:id' element={ <Device />} />
+        <Route path='/devices/device/search' element={ <Devices />} />
       </Route>
     </Route>
   )

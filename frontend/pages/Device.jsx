@@ -68,7 +68,7 @@ const Device = () => {
             d_assignedToDepartment,
             d_assignedToEmployee
         }
-        // console.log(updateData)
+        console.log(updateData)
         try{
             const res = await update({
                 id,

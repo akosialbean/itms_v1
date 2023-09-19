@@ -4,6 +4,7 @@ import { useSelector, useDispatch} from 'react-redux'
 import { Card, Col, Container, Row } from 'react-bootstrap'
 import CardHeader from 'react-bootstrap/esm/CardHeader'
 import axios from 'axios'
+import { FaDesktop, FaLaptop, FaMobileAlt, FaSun } from 'react-icons/fa'
 
 const Home = () => {
   const { userInfo } = useSelector((state) => state.auth)
@@ -76,39 +77,38 @@ const Home = () => {
         <>
           <Container>
             <Row>
-
-              <Col xs={12} md={2} lg={2}>
-                <Card className='card mt-3'>
-                  <CardHeader>TOTAL DEVICES</CardHeader>
+              <Col xs={12} md={3} lg={3}>
+                <Card className='card mt-3 text-center shadow'>
+                  <CardHeader className='bg-primary text-light py-5'><span className='h2'><strong><FaSun className='me-2' /> TOTAL DEVICES</strong></span></CardHeader>
                   <Card.Body>
-                    {deviceCount}
+                    <span className='h1'><strong>{deviceCount}</strong></span>
                   </Card.Body>
                 </Card>
               </Col>
 
-              <Col xs={12} md={2} lg={2}>
-                <Card className='card mt-3'>
-                  <CardHeader>DESKTOPS</CardHeader>
+              <Col xs={12} md={3} lg={3}>
+                <Card className='card mt-3 text-center shadow'>
+                  <CardHeader className='bg-warning text-light py-5'><span className='h2'><strong><FaDesktop className='me-2' /> DESKTOPS</strong></span></CardHeader>
                   <Card.Body>
-                    {desktopCount}
+                    <span className='h1'><strong>{desktopCount}</strong></span>
                   </Card.Body>
                 </Card>
               </Col>
 
-              <Col xs={12} md={2} lg={2}>
-                <Card className='card mt-3'>
-                  <CardHeader>LAPTOPS</CardHeader>
+              <Col xs={12} md={3} lg={3}>
+                <Card className='card mt-3 text-center shadow'>
+                  <CardHeader className='bg-info text-light py-5'><span className='h2'><strong><FaLaptop className='me-2'/> LAPTOPS</strong></span></CardHeader>
                   <Card.Body>
-                    {laptopCount}
+                    <span className='h1'><strong>{laptopCount}</strong></span>
                   </Card.Body>
                 </Card>
               </Col>
 
-              <Col xs={12} md={2} lg={2}>
-                <Card className='card mt-3'>
-                  <CardHeader>MOBILE PHONES</CardHeader>
+              <Col xs={12} md={3} lg={3}>
+                <Card className='card mt-3 text-center shadow'>
+                  <CardHeader className='bg-secondary text-light py-5'><span className='h2'><strong><FaMobileAlt className='me-2'/> MOBILE PHONES</strong></span></CardHeader>
                   <Card.Body>
-                    {phoneCount}
+                    <span className='h1'><strong>{phoneCount}</strong></span>
                   </Card.Body>
                 </Card>
               </Col>

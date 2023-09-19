@@ -1,4 +1,4 @@
-import {Navbar, Nav, Container, NavDropdown, Badge} from 'react-bootstrap'
+import {Navbar, Nav, Container, NavDropdown, Badge, Image} from 'react-bootstrap'
 import {FaChartPie, FaLaptopHouse, FaSignInAlt, FaSignOutAlt} from 'react-icons/fa'
 import { useSelector, useDispatch} from 'react-redux'
 import { useNavigate } from 'react-router-dom'
@@ -27,7 +27,7 @@ const Header = () => {
             <Navbar bg='dark' variant='dark' expand='sm' className='fixed-top' collapseOnSelect>
                 <Container>
                     <LinkContainer to='/'>
-                        <Navbar.Brand>ITMS</Navbar.Brand>
+                        <Navbar.Brand><Image src='../public/it.png' rounded style={{width:'45px'}} />ITMS</Navbar.Brand>
                     </LinkContainer>
                     <Navbar.Toggle aria-controls='basic-navbar-nav' />
                     <Navbar.Collapse id='basic-navbar-nav'>

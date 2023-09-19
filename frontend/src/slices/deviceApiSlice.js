@@ -16,8 +16,15 @@ export const devicesApiSlice = apiSlice.injectEndpoints({
                 method: 'PATCH',
                 body: updateData
             })
+        }),
+        search: builder.mutation({
+            query: ({id, searchItem}) => ({
+                url: `${DEVICE_URL}/device/search`,
+                method: 'POST',
+                body: searchItem
+            })
         })
     })
 })
 
-export const { useAddMutation, useUpdateMutation } = devicesApiSlice
+export const { useAddMutation, useUpdateMutation, useSearchMutation } = devicesApiSlice

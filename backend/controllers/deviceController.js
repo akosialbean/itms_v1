@@ -67,7 +67,7 @@ const getDevice = asyncHandler(async (req, res) => {
 const updateDevice = asyncHandler(async (req, res, {id}) => {
     const device = await Device.findById(req.params.id)
     // res.send(device)
-    // res.header('Access-Control-Allow-Origin', '*')
+    res.header('Access-Control-Allow-Origin', '*')
     
 
     if(device){
@@ -99,6 +99,7 @@ const updateDevice = asyncHandler(async (req, res, {id}) => {
         res.status(404)
         throw new Error('Device not found')
     }
+
     res.status(200).json({message: 'Device details updated'})
     res.send('Updating record')
 })
@@ -126,6 +127,7 @@ const getDeviceCount = asyncHandler(async(req, res) =>{
     res.header('Access-Control-Allow-Origin', '*')
     res.status(200).json(device)
 })
+
 
 export {
     addDevice,

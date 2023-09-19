@@ -1,6 +1,6 @@
 import express from "express"
 const router = express.Router()
-import { protect } from '../middlewares/authMiddleware.js'
+// import { protect } from '../middlewares/authMiddleware.js'
 import { addDevice, getDevices, getDevice, updateDevice, getDesktopCount, getLaptopCount, getPhoneCount, getDeviceCount } from "../controllers/deviceController.js"
 
 router.get('/', getDevices)
