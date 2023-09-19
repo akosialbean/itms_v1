@@ -1,5 +1,5 @@
-import Ticket from '../models/ticketModel.js'
 import asyncHandler from 'express-async-handler'
+import Ticket from '../models/ticketModel.js'
 
 //View tickets
 //route POST/api/ticket
@@ -56,7 +56,7 @@ const deleteTicket = asyncHandler(async (req, res) => {
     const ticket = await Ticket.findById(req.params.id);
 
     if (ticket) {
-        await ticket.remove();
+        await ticket.deleteOne();
         res.json({ message: 'Ticket removed' });
     } else {
         res.status(404);

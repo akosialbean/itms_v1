@@ -1,4 +1,0 @@
-import Ticket from '../models/ticketModel.js';
-import asyncHandler from 'express-async-handler';
-
-// Your route handling code here
