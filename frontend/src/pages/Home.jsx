@@ -15,7 +15,7 @@ const Home = () => {
             <Row className='justify-content-center font-weight-bold'>
 
               <Col xs={12 } md={6} lg={6} xl={6}>
-                <Card className='card mt-3'>
+                <Card className='card mt-3 stats-shadow'>
                   <CardHeader>TOTAL DEVICES</CardHeader>
                   <Card.Body className='stats-count'>
                     1,000
@@ -24,7 +24,7 @@ const Home = () => {
               </Col>
 
               <Col xs={12} md={6} lg={6} xl={6}>
-                <Card className='card mt-3'>
+                <Card className='card mt-3 stats-shadow'>
                   <CardHeader><FaDesktop/>DESKTOPS</CardHeader>
                   <Card.Body className='stats-count'>
                     1,000
@@ -33,7 +33,7 @@ const Home = () => {
               </Col>
 
               <Col xs={12} md={6} lg={6} xl={6}>
-                <Card className='card mt-3'>
+                <Card className='card mt-3 stats-shadow'>
                   <CardHeader><FaLaptop/>LAPTOPS</CardHeader>
                   <Card.Body className='stats-count'>
                     1,000
@@ -42,7 +42,7 @@ const Home = () => {
               </Col>
 
               <Col xs={12} md={6} lg={6} xl={6}>
-                <Card className='card mt-3'>
+                <Card className='card mt-3 stats-shadow'>
                   <CardHeader><FaMobileAlt/>MOBILE PHONES</CardHeader>
                   <Card.Body className='stats-count'>
                     1,000
