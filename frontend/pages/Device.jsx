@@ -3,7 +3,7 @@ import { Button, Card, Col, Container, Form, Row } from 'react-bootstrap'
 import CardHeader from 'react-bootstrap/esm/CardHeader'
 import axios from 'axios'
 import { useParams, useNavigate } from 'react-router-dom'
-import { FaDesktop, FaLaptop, FaMobileAlt } from 'react-icons/fa'
+import { FaDesktop, FaLaptop, FaMobileAlt, FaRobot, FaServer } from 'react-icons/fa'
 import { useUpdateMutation} from '../src/slices/deviceApiSlice'
 import { toast } from 'react-toastify'
 import { useDispatch } from 'react-redux'
@@ -113,6 +113,16 @@ const Device = () => {
                                     <FaMobileAlt size={100}/>
                                 ) : ('')
                                 }
+                                {
+                                device.d_type == 'Server' ? (
+                                    <FaServer size={60}/>
+                                ) : ('')
+                                }
+                                {
+                                device.d_type == 'Mini PC' ? (
+                                    <FaRobot size={60}/>
+                                ) : ('')
+                                }
                             </Col>
 
                             <Col xs={12} s={12} md={9} lg={9}>
@@ -124,6 +134,8 @@ const Device = () => {
                                             <option value={d_type}>{d_type}</option>
                                             <option value='Desktop'>Desktop</option>
                                             <option value='Laptop'>Laptop</option>
+                                            <option value='Mini PC'>Mini PC</option>
+                                            <option value='Server'>Server</option>
                                             <option value='Phone'>Phone</option>
                                         </Form.Select>
                                     </Form.Group>

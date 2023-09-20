@@ -10,6 +10,7 @@ const port = process.env.port || 5000
 
 import userRoutes from './routes/userRoutes.js'
 import deviceRoutes from './routes/deviceRoutes.js'
+import ipRoutes from './routes/ipRoutes.js'
 
 connectDB()
 
@@ -21,6 +22,7 @@ app.use(cookieParser())
 
 app.use('/api/users', userRoutes)
 app.use('/api/devices', deviceRoutes)
+app.use('/api/ip', ipRoutes)
 
 if(process.env.NODE_ENV === 'production'){
     const __dirname = path.resolved()

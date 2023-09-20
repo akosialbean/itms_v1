@@ -61,6 +61,8 @@ const AddDevice = () => {
                         <option value=''>--</option>
                         <option value='Desktop'>Desktop</option>
                         <option value='Laptop'>Laptop</option>
+                        <option value='Mini PC'>Mini PC</option>
+                        <option value='Server'>Server</option>
                         <option value='Phone'>Phone</option>
                     </Form.Select>
                 </Form.Group>

@@ -53,7 +53,7 @@ const addDevice = asyncHandler(async (req, res) => {
 })
 
 const getDevices = asyncHandler(async (req, res) => {
-    const devices = await Device.find()
+    const devices = await Device.find().sort({d_hostName: 1})
     res.header('Access-Control-Allow-Origin', '*')
     res.status(200).json(devices)
 })

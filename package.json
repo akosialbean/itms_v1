@@ -11,7 +11,7 @@
     "dev": "concurrently \"npm run server\" \"npm run client\""
   },
   "keywords": [],
-  "author": "",
+  "author": "Alvin Castor",
   "license": "ISC",
   "dependencies": {
     "bcryptjs": "^2.4.3",

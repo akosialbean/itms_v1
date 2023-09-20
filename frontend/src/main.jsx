@@ -14,6 +14,8 @@ import PrivateRoute from './components/PrivateRoute.jsx'
 import Devices from '../pages/Devices.jsx'
 import AddDevice from '../pages/AddDevice.jsx'
 import Device from '../pages/Device.jsx'
+import './index.css'
+import IpAddress from '../pages/IpAddress.jsx'
 
 // PAGES
 const router = createBrowserRouter(
@@ -21,6 +23,7 @@ const router = createBrowserRouter(
     <Route path='/' element={ <App /> }>
       <Route index={true} path='/' element={ <Home />} />
       <Route path='/login' element={ <LoginPage />} />
+      <Route path='/ip' element={ <IpAddress />} />
       {/* PRIVATE ROUTES */}
       <Route path='' element={<PrivateRoute />}>
         <Route path='/register' element={ <RegisterPage />} />
