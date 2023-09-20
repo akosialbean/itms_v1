@@ -31,7 +31,7 @@ const Header = () => {
                     </LinkContainer>
                     <Navbar.Toggle aria-controls='basic-navbar-nav' />
                     <Navbar.Collapse id='basic-navbar-nav'>
-                        <Nav className='ms-auto'>
+                        <Nav className='ms-auto' style={{fontSize: '1.2rem'}}>
                             { userInfo ? (
                                 <>
                                     <LinkContainer to='/'>

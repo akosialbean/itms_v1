@@ -1,27 +1,68 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { Container, Card, Row, Button, Col, Form, InputGroup, Nav } from 'react-bootstrap'
+import CardHeader from 'react-bootstrap/esm/CardHeader'
+import { LinkContainer } from 'react-router-bootstrap'
+import DeviceNav from '../src/components/DeviceNav'
+import axios from 'axios'
 
 const IpAddress = () => {
-  // Initialize an array to store IP addresses
-  const ipAddresses = [];
-
-  // Define the 'status' variable outside the loop
-  const status = 'inactive';
-
-  // Loop to generate IP addresses
-  for (let ip = 0; ip <= 255; ip++) {
-    let result = `10.10.20.${ip}`;
-    ipAddresses.push({ ip: result, status }); // Add each IP address to the array with 'status'
+  const [ip, setIp] = useState([])
+  const getIp = () => {
+    return axios.get('http://localhost:8000/api/ip')
   }
 
-  // Convert the array to a JSON string
-  const jsonResult = JSON.stringify(ipAddresses, null, 2); // Pretty-print JSON with 2-space indentation
+  useEffect(() => {
+    getIp().then((response) => {
+      setIp(response.data)
+    })
+  }, [])
 
   return (
-    <pre>
-      {/* Render the JSON result */}
-      {jsonResult}
-    </pre>
-  );
-};
+    <>
+      <Container className='container-fluid'>
+        <Row>
+        
+          <Col xs={12} s={12} md={2} lg={2}>
+            
+            <DeviceNav />
+            
+          </Col>
+          <Col xs={12} s={12} md={10} lg={10}>
+            <Container>
+              <Card  className='border border-primary shadow border border-3'>
+                <CardHeader className='bg-primary'>
+                  <Card.Title className='text-light'><strong>IP Addresses</strong></Card.Title>
+                </CardHeader>
+                <Card.Body>
+                  <Row>
+                    <Col xs={12} md={12} lg={12}>
+                      <InputGroup>
+                        <Form.Control className='form-control form-control-md' type='text' placeholder='search here' autoFocus></Form.Control>
+                      </InputGroup>
+                    </Col>
+                  </Row>
+
+                  <hr />
+                  
+                  {ip.length > 0 ? (
+                    <Row>
+                      {ip.map((item) => (
+                      <Col xs={12} md={2} lg={2} className='my-1'>
+                        <Button variant={item.status === 'active' ? ('success') : ('danger')} className='shadow w-100'>
+                          {item.ip}
+                        </Button>
+                      </Col>
+                      ))}
+                    </Row>
+                  ) : (<h1>Loading</h1>)}
+                </Card.Body>
+              </Card>
+            </Container>
+          </Col>
+        </Row>
+      </Container>
+    </>
+  )
+}
 
 export default IpAddress;
