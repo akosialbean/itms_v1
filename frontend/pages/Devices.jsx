@@ -45,14 +45,14 @@ const Devices = () => {
                 </CardHeader>
                 <Card.Body>
                   <Row>
-                    <Col xs={12} md={12} lg={2} className='mb-2'>
+                    <Col xl={12} className='mb-2'>
                       <LinkContainer to='/devices/add'>
                         <div className="d-grip gap-2">
                           <Button variant='success' className='btn-md' style={{width: '100%'}}><strong><FaPlusCircle /> Add Device</strong></Button>
                         </div>
                       </LinkContainer>
                     </Col>
-                    <Col xs={12} md={12} lg={10}>
+                    <Col xl={12}>
                       <InputGroup>
                         <Form.Control className='form-control form-control-md' type='text' placeholder='search here' value={searchItem} onChange={(e) => setSearchItem(e.target.value)} autoFocus></Form.Control>
                       </InputGroup>
@@ -72,7 +72,7 @@ const Devices = () => {
                     (device.d_assignedToDepartment && device.d_assignedToDepartment.toLowerCase().includes(searchItem)) ||
                     (device.d_assignedToEmployee && device.d_assignedToEmployee.toLowerCase().includes(searchItem))
                     ).map((device) => (
-                    <Col xs={12} s={12} md={3} lg={3} className='mb-4' key={device._id}>
+                    <Col xs={12} s={12} md={4} lg={3} className='mb-4' key={device._id}>
                       <LinkContainer to={`/devices/device/${device._id}`} style={{width:'100%'}}>
                         <Button variant='primary' className='shadow'>
                           <Row>
