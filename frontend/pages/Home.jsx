@@ -4,7 +4,8 @@ import { useSelector, useDispatch} from 'react-redux'
 import { Card, Col, Container, Row } from 'react-bootstrap'
 import CardHeader from 'react-bootstrap/esm/CardHeader'
 import axios from 'axios'
-import { FaDesktop, FaLaptop, FaMobileAlt, FaSun } from 'react-icons/fa'
+import { FaDesktop, FaLaptop, FaMobileAlt } from 'react-icons/fa'
+import { HiCpuChip } from 'react-icons/hi2'
 
 const Home = () => {
   const { userInfo } = useSelector((state) => state.auth)
@@ -78,8 +79,8 @@ const Home = () => {
           <Container>
             <Row>
               <Col xs={12 } md={6} lg={6} xl={3}>
-                <Card className='card mt-3 text-center shadow border border-primary border-3'>
-                  <CardHeader className='bg-primary text-light py-5'><span className='h4'><strong><FaSun className='me-2' /> TOTAL DEVICES</strong></span></CardHeader>
+                <Card className='card mt-3 text-center shadow border border-success border-3'>
+                  <CardHeader className='bg-success text-light py-5'><span className='h4'><strong><HiCpuChip className='me-2' /> TOTAL DEVICES</strong></span></CardHeader>
                   <Card.Body>
                     <span className='h1'><strong>{deviceCount}</strong></span>
                   </Card.Body>
@@ -87,8 +88,8 @@ const Home = () => {
               </Col>
 
               <Col xs={12 } md={6} lg={6} xl={3}>
-                <Card className='card mt-3 text-center shadow border border-warning border-3'>
-                  <CardHeader className='bg-warning text-light py-5'><span className='h4'><strong><FaDesktop className='me-2' /> DESKTOPS</strong></span></CardHeader>
+                <Card className='card mt-3 text-center shadow border border-primary border-3'>
+                  <CardHeader className='bg-primary text-light py-5'><span className='h4'><strong><FaDesktop className='me-2' /> DESKTOPS</strong></span></CardHeader>
                   <Card.Body>
                     <span className='h1'><strong>{desktopCount}</strong></span>
                   </Card.Body>
