@@ -185,6 +185,7 @@ const Device = () => {
                                         <Form.Label>IP Address</Form.Label>
                                         <Form.Select onChange={(e) => setIpAddressUpdate(e.target.value)} required>
                                             <option value={d_ipAddress}>{d_ipAddress}</option>
+                                            <option value="0.0.0.0">Remove IP</option>
                                             {ip.map((item, index) => (
                                                 <option key={index} value={item.ip}>
                                                     {item.ip}

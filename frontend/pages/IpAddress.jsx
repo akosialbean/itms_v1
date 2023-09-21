@@ -4,6 +4,7 @@ import CardHeader from 'react-bootstrap/esm/CardHeader'
 import { LinkContainer } from 'react-router-bootstrap'
 import DeviceNav from '../src/components/DeviceNav'
 import axios from 'axios'
+import { FaNetworkWired } from 'react-icons/fa';
 
 const IpAddress = () => {
   const [ip, setIp] = useState([])
@@ -49,7 +50,7 @@ const IpAddress = () => {
                       {ip.map((item) => (
                       <Col xs={12} md={2} lg={2} className='my-1'>
                         <Button variant={item.status === 'active' ? ('success') : ('danger')} className='shadow w-100'>
-                          {item.ip}
+                          <FaNetworkWired className='me-3' /> {item.ip}
                         </Button>
                       </Col>
                       ))}
