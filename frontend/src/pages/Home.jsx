@@ -23,6 +23,15 @@ const Home = () => {
                 </Card>
               </Col>
 
+              <Col xs={12 } md={6} lg={6} xl={6}>
+                <Card className='card mt-3 stats-shadow'>
+                  <CardHeader>TOTAL TICKETS</CardHeader>
+                  <Card.Body className='stats-count'>
+                    1,000
+                  </Card.Body>
+                </Card>
+              </Col>
+
               <Col xs={12} md={6} lg={6} xl={6}>
                 <Card className='card mt-3 stats-shadow'>
                   <CardHeader><FaDesktop/>DESKTOPS</CardHeader>

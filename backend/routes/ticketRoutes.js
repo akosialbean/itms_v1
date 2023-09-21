@@ -9,8 +9,7 @@ import {
 
 router.get("/", getTicket); // Use "get" to retrieve tickets
 // Define the correct routes here
-router.post("/", createTicket);
-router.put("/:id", updateTicket);
-router.delete("/:id", deleteTicket);
+router.post("/add", createTicket);
+router.put("/ticket/:id", updateTicket);
 
 export default router;

@@ -1,5 +1,5 @@
 import {Navbar, Nav, Container, NavDropdown, Badge} from 'react-bootstrap'
-import {FaChartPie, FaLaptopHouse, FaSignInAlt, FaSignOutAlt} from 'react-icons/fa'
+import {FaChartPie, FaLaptopHouse, FaSignInAlt, FaSignOutAlt, FaTicketAlt} from 'react-icons/fa'
 import { useSelector, useDispatch} from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import React from 'react'
@@ -37,6 +37,13 @@ const Header = () => {
                                     <LinkContainer to='/'>
                                         <Nav.Link>
                                             <FaChartPie /> Dashboard
+                                        </Nav.Link>
+                                    </LinkContainer>
+
+                                    
+                                    <LinkContainer to='/tickets'>
+                                        <Nav.Link>
+                                            <FaTicketAlt /> Tickets
                                         </Nav.Link>
                                     </LinkContainer>
 
