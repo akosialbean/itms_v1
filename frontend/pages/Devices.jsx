@@ -54,7 +54,7 @@ const Devices = () => {
                     </Col>
                     <Col xl={12}>
                       <InputGroup>
-                        <Form.Control className='form-control form-control-md' type='text' placeholder='search here' value={searchItem} onChange={(e) => setSearchItem(e.target.value)} autoFocus></Form.Control>
+                        <Form.Control className='form-control form-control-md' type='text' placeholder='Search here' value={searchItem} onChange={(e) => setSearchItem(e.target.value)} autoFocus></Form.Control>
                       </InputGroup>
                     </Col>
                   </Row>
