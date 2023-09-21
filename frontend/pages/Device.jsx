@@ -194,7 +194,7 @@ const Device = () => {
                                     </Form.Group>
                                     
                                     <Form.Group className='my-2' controlId='d_ipAddress'>
-                                        <Form.Control type='text' value={d_ipAddress}></Form.Control>
+                                        <Form.Control type='hidden' value={d_ipAddress}></Form.Control>
                                     </Form.Group>
 
                                     <Form.Group className='my-2' controlId='d_macAddress'>
