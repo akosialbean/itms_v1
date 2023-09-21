@@ -5,8 +5,7 @@ import cookieParser from 'cookie-parser'
 import { notFound, errorHandler } from './middlewares/errorMiddleware.js'
 import connectDB from './config/db.js'
 const port = process.env.port || 5000
-// const cors = require('cors')
-// app.use(cors('*'))
+
 
 import userRoutes from './routes/userRoutes.js'
 import deviceRoutes from './routes/deviceRoutes.js'
