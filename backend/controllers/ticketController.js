@@ -7,7 +7,8 @@ import Ticket from '../models/ticketModel.js'
 
 const getTicket = asyncHandler(async (req, res) => {
     const tickets = await Ticket.find({});
-    res.json(tickets);
+    res.header('Access-Control-Allow-Origin', '*')
+    res.status(200).json(tickets);
 });
 
 //Create new ticket
@@ -33,6 +34,7 @@ const createTicket = asyncHandler(async (req, res) => {
 const updateTicket = asyncHandler(async (req, res) => {
     const { title, description, category } = req.body;
     const ticket = await Ticket.findById(req.params.id);
+    res.header('Access-Control-Allow-Origin', '*')
 
     if (ticket) {
         ticket.title = title;
@@ -54,6 +56,7 @@ const updateTicket = asyncHandler(async (req, res) => {
 
 const deleteTicket = asyncHandler(async (req, res) => {
     const ticket = await Ticket.findById(req.params.id);
+    res.header('Access-Control-Allow-Origin', '*')
 
     if (ticket) {
         await ticket.deleteOne();

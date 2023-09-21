@@ -13,7 +13,7 @@ const Tickets = () => {
     } catch (error) {
       console.error("Error fetching tickets:", error);
     }
-  };
+  };  
 
   useEffect(() => {
     getTickets().then((response) => {
