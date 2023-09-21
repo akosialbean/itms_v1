@@ -1,7 +1,7 @@
 {
   "name": "mern",
   "version": "1.0.0",
-  "description": "",
+  "description": "A KodeGo Capstone Project",
   "type": "module",
   "main": "index.js",
   "scripts": {
@@ -11,7 +11,7 @@
     "dev": "concurrently \"npm run server\" \"npm run client\""
   },
   "keywords": [],
-  "author": "Alvin Castor",
+  "author": "Alvin Castor and Ritz Feliciano",
   "license": "ISC",
   "dependencies": {
     "bcryptjs": "^2.4.3",
