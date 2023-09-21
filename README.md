@@ -43,8 +43,8 @@ A step by step series of examples that tell you how to get a development env run
    ```env
    NODE_ENV = deployment
    PORT = 8000
-   MONGO_URI = mongodb+srv://akosialbean:Local.123@mernauth.k4sbzml.mongodb.net/?retryWrites=true&w=majority
-   JWT_SECRET = Local.123
+   MONGO_URI = mongodb+srv://<username>:<password>@<db>.k4sbzml.mongodb.net/?retryWrites=true&w=majority
+   JWT_SECRET = <dbpw>
    ```
 4. Install concurrently:
    
@@ -114,6 +114,7 @@ We use [SemVer](http://semver.org/) for versioning. For the versions available, 
 # Authors
 
 - **Ritz Carl Feliciano** - *Capstone Project* - [HexeCalibre](https://github.com/HexeCalibre)
+- - **Alvin Castro** - *Capstone Project* - [akosialbean](https://github.com/akosialbean)
 
 See also the list of [contributors](https://github.com/HexeCalibre/project/contributors) who participated in this project.
 
