@@ -67,7 +67,7 @@ const ProfilePage = () => {
 
                 <Form.Group className='my-2' controlId='password'>
                     <Form.Label>Password</Form.Label>
-                    <Form.Control type='password' placeholder='Set Password'
+                    <Form.Control type='password' placeholder='New Password'
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}></Form.Control>
                 </Form.Group>
