@@ -7,4 +7,10 @@ const getAllIp = asyncHandler(async (req, res) => {
   res.status(200).json(ips); // Send the response inside the async function
 });
 
-export { getAllIp };
+const getInactiveIp = asyncHandler(async (req, res) => {
+    const ips = await IpAddress.find({status: "inactive"}); // Use await to wait for the query to complete
+    res.header('Access-Control-Allow-Origin', '*')
+    res.status(200).json(ips); // Send the response inside the async function
+});
+
+export { getAllIp, getInactiveIp };

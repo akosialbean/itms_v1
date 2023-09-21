@@ -5,7 +5,7 @@ const deviceSchema = mongoose.Schema({
     t_ticketTitle: {type: String, required: true},
     t_ticketStatus: {type: String, required: true}
 }, {
-    timstamps: true
+    timestamps: true
 })
 
 const Device = mongoose.model('Device', deviceSchema)

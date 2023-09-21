@@ -1,5 +1,6 @@
 import asyncHandler from 'express-async-handler'
 import Device from '../models/deviceModel.js'
+import Ip from '../models/ipModel.js'
 
 // ADDING OF DEVICE
 const addDevice = asyncHandler(async (req, res) => {
@@ -33,6 +34,8 @@ const addDevice = asyncHandler(async (req, res) => {
         d_assignedToEmployee
     })
 
+    await Ip.updateOne({ip: d_ipAddress}, {$set: {status: 'active'}})
+
     if(device){
         res.status(201).json({
             _id: device._id,
@@ -64,7 +67,7 @@ const getDevice = asyncHandler(async (req, res) => {
     res.status(200).json(device)
 })
 
-const updateDevice = asyncHandler(async (req, res, {id}) => {
+const updateDevice = asyncHandler(async (req, res) => {
     const device = await Device.findById(req.params.id)
     // res.send(device)
     res.header('Access-Control-Allow-Origin', '*')
@@ -76,12 +79,14 @@ const updateDevice = asyncHandler(async (req, res, {id}) => {
         device.d_model = req.body.d_model || device.d_model
         device.d_sn = req.body.d_sn || device.d_sn
         device.d_hostName = req.body.d_hostName || device.d_hostName
-        device.d_ipAddress = req.body.d_ipAddress || device.d_ipAddress
+        device.d_ipAddress = req.body.d_ipAddressUpdate || device.d_ipAddress
         device.d_macAddress = req.body.d_macAddress || device.d_macAddress
         device.d_assignedToDepartment = req.body.d_assignedToDepartment || device.d_assignedToDepartment
         device.d_assignedToEmployee = req.body.d_assignedToEmployee || device.d_assignedToEmployee
 
         const updatedDevice = await device.save()
+        await Ip.updateOne({ ip: device.d_ipAddress }, {$set:{ status: 'active' }})
+        await Ip.updateOne({ ip: req.body.d_ipAddress }, {$set:{ status: 'inactive' }})
 
         res.status(200).json({
             _id: updatedDevice._id,

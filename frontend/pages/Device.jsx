@@ -23,6 +23,8 @@ const Device = () => {
     const [d_assignedToDepartment, setAssignedToDepartment] = useState('')
     const [d_assignedToEmployee, setAssignedToEmployee] = useState('')
 
+    const [d_ipAddressUpdate, setIpAddressUpdate] = useState('')
+
     const [isButtonDisabled, setIsButtonDisabled] = useState(false);
 
     const getDevice = () => {
@@ -47,7 +49,10 @@ const Device = () => {
             setAssignedToDepartment(response.data.d_assignedToDepartment)
             setAssignedToEmployee(response.data.d_assignedToEmployee)
         })
-        
+
+        getIp().then((response) => {
+            setIp(response.data)
+        })
     }, [])
     
     const handleClick = (e) => {
@@ -63,6 +68,7 @@ const Device = () => {
             d_model,
             d_sn,
             d_hostName,
+            d_ipAddressUpdate,
             d_ipAddress,
             d_macAddress,
             d_assignedToDepartment,
@@ -87,6 +93,11 @@ const Device = () => {
         navigate('/devices')
     }
 
+    const getIp = () => {
+        return axios.get('http://localhost:8000/api/ip/inactive')
+      }
+    
+    const [ip, setIp] = useState([])
   return (
     <>
         <Container>
@@ -170,11 +181,20 @@ const Device = () => {
 
                                     <hr />
 
-                                    <Form.Group className='my-2' controlId='d_ipAddress'>
+                                    <Form.Group className='my-2' controlId='d_ipAddressUpdate'>
                                         <Form.Label>IP Address</Form.Label>
-                                        <Form.Control type='text' placeholder='0.0.0.0'
-                                        value={d_ipAddress}
-                                        onChange={(e) => setIpAddress(e.target.value)}></Form.Control>
+                                        <Form.Select onChange={(e) => setIpAddressUpdate(e.target.value)} required>
+                                            <option value={d_ipAddress}>{d_ipAddress}</option>
+                                            {ip.map((item, index) => (
+                                                <option key={index} value={item.ip}>
+                                                    {item.ip}
+                                                </option>
+                                            ))}
+                                        </Form.Select>
+                                    </Form.Group>
+                                    
+                                    <Form.Group className='my-2' controlId='d_ipAddress'>
+                                        <Form.Control type='text' value={d_ipAddress}></Form.Control>
                                     </Form.Group>
 
                                     <Form.Group className='my-2' controlId='d_macAddress'>
