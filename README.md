@@ -20,8 +20,6 @@ A step by step series of examples that tell you how to get a development env run
 1. Clone the Repository:
 
    ```bash
-   git clone https://github.com/HexeCalibre/MERN-Capstone.git
-   cd MERN-Capstone
    ```
 
 2. Install Dependencies:
@@ -49,7 +47,6 @@ A step by step series of examples that tell you how to get a development env run
 4. Install concurrently:
    
    ```node
-   npm i -D concurrently
    ```
 
 5. Add script to package.json from the root directory:
@@ -114,7 +111,7 @@ We use [SemVer](http://semver.org/) for versioning. For the versions available, 
 # Authors
 
 - **Ritz Carl Feliciano** - *Capstone Project* - [HexeCalibre](https://github.com/HexeCalibre)
-- - **Alvin Castro** - *Capstone Project* - [akosialbean](https://github.com/akosialbean)
+- - **Alvin Castor** - *Capstone Project* - [akosialbean](https://github.com/akosialbean)
 
 See also the list of [contributors](https://github.com/HexeCalibre/project/contributors) who participated in this project.
 
