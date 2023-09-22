@@ -77,7 +77,7 @@ const Home = () => {
       {userInfo ? (
         <>
           <Container>
-            <Row>
+            <Row className='text-nowrap'>
               <Col xs={12 } md={6} lg={6} xl={3}>
                 <Card className='card mt-3 text-center shadow border border-success border-3'>
                   <CardHeader className='bg-success text-light py-5'><span className='h4'><strong><HiCpuChip className='me-2' /> TOTAL DEVICES</strong></span></CardHeader>
