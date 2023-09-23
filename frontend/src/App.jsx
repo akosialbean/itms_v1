@@ -7,6 +7,8 @@ import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import TestHeader from './Test/components/TestHeader'
 import TestLoginPage from './Test/pages/TestLoginPage'
+import TestRegisterPage from './Test/pages/TestRegisterPage'
+
 
 
 const App = () => {
@@ -19,6 +21,7 @@ const App = () => {
       </Container> */}
       <TestHeader/>
       <TestLoginPage/>
+      <TestRegisterPage/>
     </>
   )
 }
