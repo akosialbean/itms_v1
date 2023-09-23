@@ -15,10 +15,10 @@ const App = () => {
   return (
     <>
       {/* <Header />
-      <ToastContainer />
       <Container className='mt-5 pt-5'>
         <Outlet />
       </Container> */}
+      <ToastContainer />
       <TestHeader/>
       <TestLoginPage/>
       <TestRegisterPage/>

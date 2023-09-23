@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Form, Button } from 'react-bootstrap';
+import { TextField, Button, Typography, Container, Grid } from '@mui/material';
 import FormContainer from '../../components/FormContainer';
 import { useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
@@ -44,74 +44,82 @@ const TestRegisterPage = () => {
   });
 
   return (
-    <>
+    <Container component="main" maxWidth="xs">
       <FormContainer>
-        <h1>Sign Up</h1>
-        <Form onSubmit={formik.handleSubmit}>
-          <Form.Group className='my-2' controlId='name'>
-            <Form.Label>Name</Form.Label>
-            <Form.Control
-              type='text'
-              placeholder='Dodong Skwerut'
-              name='name'
-              value={formik.values.name}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              isInvalid={formik.touched.name && formik.errors.name}
-            />
-            <Form.Control.Feedback type='invalid'>{formik.errors.name}</Form.Control.Feedback>
-          </Form.Group>
+        <Typography variant="h5">Sign Up</Typography>
+        <form onSubmit={formik.handleSubmit}>
+          <TextField
+            variant="outlined"
+            margin="normal"
+            fullWidth
+            id="name"
+            label="Name"
+            name="name"
+            autoComplete="name"
+            value={formik.values.name}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            error={formik.touched.name && Boolean(formik.errors.name)}
+            helperText={formik.touched.name && formik.errors.name}
+          />
 
-          <Form.Group className='my-2' controlId='email'>
-            <Form.Label>Email</Form.Label>
-            <Form.Control
-              type='email'
-              placeholder='email@sample.com'
-              name='email'
-              value={formik.values.email}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              isInvalid={formik.touched.email && formik.errors.email}
-            />
-            <Form.Control.Feedback type='invalid'>{formik.errors.email}</Form.Control.Feedback>
-          </Form.Group>
+          <TextField
+            variant="outlined"
+            margin="normal"
+            fullWidth
+            id="email"
+            label="Email Address"
+            name="email"
+            autoComplete="email"
+            value={formik.values.email}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            error={formik.touched.email && Boolean(formik.errors.email)}
+            helperText={formik.touched.email && formik.errors.email}
+          />
 
-          <Form.Group className='my-2' controlId='password'>
-            <Form.Label>Password</Form.Label>
-            <Form.Control
-              type='password'
-              placeholder='Set Password'
-              name='password'
-              value={formik.values.password}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              isInvalid={formik.touched.password && formik.errors.password}
-            />
-            <Form.Control.Feedback type='invalid'>{formik.errors.password}</Form.Control.Feedback>
-          </Form.Group>
+          <TextField
+            variant="outlined"
+            margin="normal"
+            fullWidth
+            name="password"
+            label="Password"
+            type="password"
+            id="password"
+            autoComplete="current-password"
+            value={formik.values.password}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            error={formik.touched.password && Boolean(formik.errors.password)}
+            helperText={formik.touched.password && formik.errors.password}
+          />
 
-          <Form.Group className='my-2' controlId='confirmPassword'>
-            <Form.Label>Confirm Password</Form.Label>
-            <Form.Control
-              type='password'
-              placeholder='Confirm Password'
-              name='confirmPassword'
-              value={formik.values.confirmPassword}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              isInvalid={formik.touched.confirmPassword && formik.errors.confirmPassword}
-            />
-            <Form.Control.Feedback type='invalid'>{formik.errors.confirmPassword}</Form.Control.Feedback>
-          </Form.Group>
+          <TextField
+            variant="outlined"
+            margin="normal"
+            fullWidth
+            name="confirmPassword"
+            label="Confirm Password"
+            type="password"
+            id="confirmPassword"
+            autoComplete="current-password"
+            value={formik.values.confirmPassword}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            error={formik.touched.confirmPassword && Boolean(formik.errors.confirmPassword)}
+            helperText={formik.touched.confirmPassword && formik.errors.confirmPassword}
+          />
 
-          {isLoading && <Loader />}
-
-          <Button type='submit' variant='primary' className='mt-3'>
-            Sign Up
-          </Button>
-        </Form>
+          {isLoading ? (
+            <Loader />
+          ) : (
+            <Button type="submit" variant="contained" color="primary" fullWidth>
+              Sign Up
+            </Button>
+          )}
+        </form>
       </FormContainer>
-    </>
+    </Container>
   );
 };
 
