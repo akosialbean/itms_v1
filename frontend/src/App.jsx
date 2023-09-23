@@ -6,6 +6,7 @@ import Header from './components/Header'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import TestHeader from './Test/components/TestHeader'
+import TestLoginPage from './Test/pages/TestLoginPage'
 
 
 const App = () => {
@@ -17,6 +18,7 @@ const App = () => {
         <Outlet />
       </Container> */}
       <TestHeader/>
+      <TestLoginPage/>
     </>
   )
 }
