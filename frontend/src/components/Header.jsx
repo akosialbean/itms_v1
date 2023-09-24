@@ -3,40 +3,36 @@ import {
   AppBar,
   Toolbar,
   Typography,
-  Button,
   IconButton,
-  Box,
-  Hidden,
   Drawer,
   List,
   ListItem,
   ListItemText,
+  Hidden,
+  Button,
+  Box,
+  Container,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import Brightness4Icon from "@mui/icons-material/Brightness4";
 import Brightness7Icon from "@mui/icons-material/Brightness7";
-
 import { useSelector, useDispatch } from "react-redux";
 import { useLogoutMutation } from "../slices/usersApiSlice";
 import { logout } from "../slices/authSlice";
+import { Link, useNavigate } from "react-router-dom";
 
-import { Link, useNavigate  } from "react-router-dom";
-
-function MyAppBar({ toggleThemeMode, themeMode }) {
+function Header({ toggleThemeMode, themeMode }) {
   const [drawerOpen, setDrawerOpen] = useState(false);
 
   const toggleDrawer = () => {
     setDrawerOpen(!drawerOpen);
   };
 
-  const handleLoginClick = () => {
-    toggleDrawer(); // Close the drawer when navigating to login
-  };
-
   const { userInfo } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [logoutApiCall] = useLogoutMutation();
+
   const handleLogout = async () => {
     try {
       await logoutApiCall().unwrap();
@@ -50,35 +46,87 @@ function MyAppBar({ toggleThemeMode, themeMode }) {
   return (
     <AppBar position="static">
       <Toolbar>
-        <Box
-          sx={{
-            display: "flex",
-            alignItems: "center",
-          }}
+        <Typography
+          variant="h6"
+          noWrap
+          component={Link}
+          to="/"
+          sx={{ textDecoration: "none", color: "inherit" }}
         >
           <img
             src="../it.png"
             alt="Logo"
-            style={{ width: "50px", marginRight: "1rem" }}
+            style={{ width: "45px", marginRight: "1rem" }}
           />
-          <Typography
-            variant="h6"
-            noWrap
-            component={Link}
-            to="/"
-            sx={{ textDecoration: "none", color: "inherit" }}
-          >
-            ITMS
-          </Typography>
-        </Box>
+          ITMS
+        </Typography>
         <Box sx={{ flexGrow: 1 }} />
-        <Hidden lgDown>
+        <Hidden mdUp>
+          <IconButton
+            color="inherit"
+            onClick={toggleDrawer}
+            sx={{ marginLeft: "auto" }} // Align hamburger menu to the right
+          >
+            <MenuIcon />
+          </IconButton>
+        </Hidden>
+        <Hidden lgUp>
+          <Drawer anchor="right" open={drawerOpen} onClose={toggleDrawer}>
+            <List>
+              {userInfo && (
+                <>
+                  <ListItem
+                    button
+                    component={Link}
+                    to="/"
+                    onClick={toggleDrawer}
+                  >
+                    <ListItemText primary="Dashboard" />
+                  </ListItem>
+                  <ListItem
+                    button
+                    component={Link}
+                    to="/devices"
+                    onClick={toggleDrawer}
+                  >
+                    <ListItemText primary="Devices" />
+                  </ListItem>
+                </>
+              )}
+              <ListItem button onClick={toggleThemeMode}>
+                <ListItemText primary="Toggle Theme" />
+              </ListItem>
+              {userInfo ? (
+                <ListItem button onClick={handleLogout}>
+                  <ListItemText primary="Logout" />
+                </ListItem>
+              ) : (
+                <ListItem
+                  button
+                  component={Link}
+                  to="/login"
+                  onClick={toggleDrawer}
+                >
+                  <ListItemText primary="Login" />
+                </ListItem>
+              )}
+            </List>
+          </Drawer>
+        </Hidden>
+        <Hidden mdDown>
+          {/* Show "Dashboard" and "Devices" on larger screens */}
+          {userInfo && (
+            <>
+              <Button color="inherit" component={Link} to="/">
+                Dashboard
+              </Button>
+              <Button color="inherit" component={Link} to="/devices">
+                Devices
+              </Button>
+            </>
+          )}
           <IconButton onClick={toggleThemeMode} color="inherit">
-            {themeMode === "dark" ? (
-              <Brightness7Icon />
-            ) : (
-              <Brightness4Icon />
-            )}
+            {themeMode === "dark" ? <Brightness7Icon /> : <Brightness4Icon />}
           </IconButton>
           {userInfo ? (
             <Button color="inherit" onClick={handleLogout}>
@@ -95,43 +143,9 @@ function MyAppBar({ toggleThemeMode, themeMode }) {
             </Button>
           )}
         </Hidden>
-        <Hidden lgUp>
-          <IconButton color="inherit" onClick={toggleDrawer}>
-            <MenuIcon />
-          </IconButton>
-        </Hidden>
       </Toolbar>
-      <Hidden lgUp>
-        <Drawer anchor="right" open={drawerOpen} onClose={toggleDrawer}>
-          <List>
-            <ListItem>
-              <IconButton onClick={toggleThemeMode} color="inherit">
-                {themeMode === "dark" ? (
-                  <Brightness7Icon />
-                ) : (
-                  <Brightness4Icon />
-                )}
-              </IconButton>
-            </ListItem>
-            {userInfo ? (
-              <ListItem button onClick={handleLogout}>
-                <ListItemText primary="Logout" />
-              </ListItem>
-            ) : (
-              <ListItem
-                button
-                component={Link}
-                to="/login"
-                onClick={handleLoginClick}
-              >
-                <ListItemText primary="Login" />
-              </ListItem>
-            )}
-          </List>
-        </Drawer>
-      </Hidden>
     </AppBar>
   );
 }
 
-export default MyAppBar;
+export default Header;
