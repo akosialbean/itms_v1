@@ -82,6 +82,7 @@ const LoginPage = () => {
               onChange={formik.handleChange}
               error={formik.touched.email && Boolean(formik.errors.email)}
               helperText={formik.touched.email && formik.errors.email}
+              sx={{marginTop: 1, marginBottom: 3}}
             />
             <TextField
               variant="outlined"
@@ -117,13 +118,14 @@ const LoginPage = () => {
                 fullWidth
                 variant="contained"
                 color="primary"
-                sx={{ mt: 3 }}
+                sx={{ marginTop: 4 }}
               >
                 Sign In
               </Button>
             )}
             <Grid container justifyContent="flex-end">
-              <Grid item>
+              <Grid item 
+                sx={{ marginTop: 4 }}>
                 <Link component={RouterLink} to="/register" variant="body2">
                   New User? Register
                 </Link>
