@@ -50,7 +50,7 @@ const IpAddress = () => {
                       {ip.map((item) => (
                       <Col xs={6} md={4} lg={3} xl={2} className='my-1'>
                         <Button variant={item.status === 'active' ? ('success') : ('danger')} className='shadow w-100'>
-                          <FaNetworkWired className='' /> {item.ip}
+                          <FaNetworkWired className='me-5' /> {item.ip}
                         </Button>
                       </Col>
                       ))}
