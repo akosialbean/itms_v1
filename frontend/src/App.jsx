@@ -4,7 +4,6 @@ import { Outlet } from "react-router-dom";
 import Header from "./components/Header";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import TestHeader from "./Test/components/TestHeader";
 import TestLoginPage from "./Test/pages/TestLoginPage";
 import TestRegisterPage from "./Test/pages/TestRegisterPage";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
@@ -38,7 +37,7 @@ const App = () => {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <ToastContainer />
-        <TestHeader toggleThemeMode={toggleThemeMode} themeMode={themeMode} />
+        <Header toggleThemeMode={toggleThemeMode} themeMode={themeMode} />
       <Container className="mt-5 pt-5">
         <TestLoginPage />
         <TestRegisterPage />

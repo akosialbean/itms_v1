@@ -1,99 +1,136 @@
+import React, { useState, useEffect } from "react";
 import {
-  Navbar,
-  Nav,
-  Container,
-  NavDropdown,
-  Badge,
-  Image,
-} from "react-bootstrap";
-import { FaChartPie, FaSignInAlt, FaSignOutAlt } from "react-icons/fa";
-import { RxExit } from "react-icons/rx";
-import { PiDevicesFill } from "react-icons/pi";
-import { useSelector, useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import React from "react";
-import { LinkContainer } from "react-router-bootstrap";
-import { useLogoutMutation } from "../slices/usersApiSlice";
-import { logout } from "../slices/authSlice";
+  AppBar,
+  Box,
+  Toolbar,
+  Typography,
+  Button,
+  IconButton,
+  Drawer,
+  List,
+  ListItem,
+  ListItemText,
+} from "@mui/material";
+import MenuIcon from "@mui/icons-material/Menu";
+import Brightness4Icon from "@mui/icons-material/Brightness4";
+import Brightness7Icon from "@mui/icons-material/Brightness7";
 
-const Header = () => {
-  const { userInfo } = useSelector((state) => state.auth);
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const [logoutApiCall] = useLogoutMutation();
-  const handleLogout = async () => {
-    try {
-      await logoutApiCall().unwrap();
-      dispatch(logout());
-      navigate("/");
-    } catch (err) {
-      console.log(err);
-    }
+function Header({ toggleThemeMode, themeMode }) {
+  const [drawerOpen, setDrawerOpen] = React.useState(false);
+  const [screenWidth, setScreenWidth] = React.useState(window.innerWidth);
+
+  const toggleDrawer = () => {
+    setDrawerOpen(!drawerOpen);
   };
+
+  const handleResize = () => {
+    setScreenWidth(window.innerWidth);
+  };
+
+  useEffect(() => {
+    handleResize(); // Check initial screen size
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
   return (
-    <>
-      <header>
-        <Navbar
-          bg="dark"
-          variant="dark"
-          expand="sm"
-          className="fixed-top"
-          collapseOnSelect
-        >
-          <Container>
-            <LinkContainer to="/">
-              <Navbar.Brand>
-                <Image src="../it.png" rounded style={{ width: "45px" }} />
-                ITMS
-              </Navbar.Brand>
-            </LinkContainer>
-            <Navbar.Toggle aria-controls="basic-navbar-nav" />
-            <Navbar.Collapse id="basic-navbar-nav">
-              <Nav className="ms-auto" style={{ fontSize: "1.2rem" }}>
-                {userInfo ? (
-                  <>
-                    <LinkContainer to="/">
-                      <Nav.Link>
-                        <FaChartPie /> Dashboard
-                      </Nav.Link>
-                    </LinkContainer>
-
-                    <LinkContainer to="/devices">
-                      <Nav.Link>
-                        <PiDevicesFill /> Devices
-                      </Nav.Link>
-                    </LinkContainer>
-
-                    {/* //DROPDOWN LINKS */}
-                    <NavDropdown title={userInfo.name} id="username">
-                      <LinkContainer to="/profile">
-                        <NavDropdown.Item>Profile</NavDropdown.Item>
-                      </LinkContainer>
-                      <LinkContainer to="/register">
-                        <NavDropdown.Item>Add new User</NavDropdown.Item>
-                      </LinkContainer>
-                      <NavDropdown.Item onClick={handleLogout} className="text-danger">
-                        <RxExit />
-                        Logout
-                      </NavDropdown.Item>
-                    </NavDropdown>
-                  </>
+    <Box sx={{ flexGrow: 1 }}>
+      <AppBar position="static">
+        <Toolbar sx={{ justifyContent: "space-between" }}>
+          <Toolbar disableGutters>
+            {/* Logo and title */}
+            <img
+              src="../it.png"
+              alt="Logo"
+              style={{ width: "45px", marginRight: "1rem" }}
+            />
+            <Typography
+              variant="h6"
+              noWrap
+              component="a"
+              href="/"
+              sx={{
+                mr: 2,
+                fontFamily: "monospace",
+                fontWeight: 700,
+                letterSpacing: ".2rem",
+                color: "inherit",
+                textDecoration: "none",
+              }}
+            >
+              ITMS
+            </Typography>
+          </Toolbar>
+          <Toolbar
+            sx={{
+              display: "flex",
+              justifyContent: "flex-end",
+            }}
+          >
+            {/* Toggle Theme Icon */}
+            {screenWidth >= 899 && (
+              <IconButton onClick={toggleThemeMode} color="inherit">
+                {themeMode === "dark" ? (
+                  <Brightness7Icon />
                 ) : (
-                  <>
-                    <LinkContainer to="/login">
-                      <Nav.Link>
-                        <FaSignInAlt /> Sign In
-                      </Nav.Link>
-                    </LinkContainer>
-                  </>
+                  <Brightness4Icon />
                 )}
-              </Nav>
-            </Navbar.Collapse>
-          </Container>
-        </Navbar>
-      </header>
-    </>
+              </IconButton>
+            )}
+            {/* Login Button */}
+            {screenWidth >= 899 ? (
+              <Button color="inherit">Login</Button>
+            ) : (
+              <IconButton
+                size="large"
+                edge="end"
+                color="inherit"
+                aria-label="menu"
+                sx={{
+                  display: { xs: "block", sm: "block", md: "none" },
+                  ml: 2,
+                }}
+                onClick={toggleDrawer}
+              >
+                <MenuIcon />
+              </IconButton>
+            )}
+          </Toolbar>
+          <Drawer
+            anchor="right"
+            open={drawerOpen}
+            onClose={toggleDrawer}
+            sx={{
+              "& .MuiDrawer-paper": { boxSizing: "border-box", width: 250 },
+            }}
+          >
+            <List>
+              <ListItem>
+                {/* Toggle Theme Icon (inside the drawer) */}
+                {screenWidth < 899 && (
+                  <IconButton onClick={toggleThemeMode} color="inherit">
+                    {themeMode === "dark" ? (
+                      <Brightness7Icon />
+                    ) : (
+                      <Brightness4Icon />
+                    )}
+                  </IconButton>
+                )}
+              </ListItem>
+              {/* Login Button (inside the drawer) */}
+              {screenWidth < 899 && (
+                <ListItem button onClick={toggleDrawer}>
+                  <ListItemText primary="Login" />
+                </ListItem>
+              )}
+            </List>
+          </Drawer>
+        </Toolbar>
+      </AppBar>
+    </Box>
   );
-};
+}
 
 export default Header;
