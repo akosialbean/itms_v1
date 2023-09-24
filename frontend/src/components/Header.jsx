@@ -12,10 +12,14 @@ import {
   Button,
   Box,
   Container,
+  Menu,
+  MenuItem,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import Brightness4Icon from "@mui/icons-material/Brightness4";
 import Brightness7Icon from "@mui/icons-material/Brightness7";
+import ExitToAppIcon from "@mui/icons-material/ExitToApp";
+
 import { useSelector, useDispatch } from "react-redux";
 import { useLogoutMutation } from "../slices/usersApiSlice";
 import { logout } from "../slices/authSlice";
@@ -23,6 +27,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 function Header({ toggleThemeMode, themeMode }) {
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const [anchorEl, setAnchorEl] = useState(null);
 
   const toggleDrawer = () => {
     setDrawerOpen(!drawerOpen);
@@ -41,6 +46,14 @@ function Header({ toggleThemeMode, themeMode }) {
     } catch (err) {
       console.log(err);
     }
+  };
+
+  const handleUsernameClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleUsernameClose = () => {
+    setAnchorEl(null);
   };
 
   return (
@@ -65,7 +78,7 @@ function Header({ toggleThemeMode, themeMode }) {
           <IconButton
             color="inherit"
             onClick={toggleDrawer}
-            sx={{ marginLeft: "auto" }} // Align hamburger menu to the right
+            sx={{ marginLeft: "auto" }}
           >
             <MenuIcon />
           </IconButton>
@@ -94,10 +107,21 @@ function Header({ toggleThemeMode, themeMode }) {
                 </>
               )}
               <ListItem button onClick={toggleThemeMode}>
-                <ListItemText primary="Toggle Theme" />
+                {themeMode === "dark" ? (
+                  <>
+                    <Brightness4Icon />
+                    <ListItemText primary="Light" />
+                  </>
+                ) : (
+                  <>
+                    <Brightness7Icon />
+                    <ListItemText primary="Dark" />
+                  </>
+                )}
               </ListItem>
               {userInfo ? (
-                <ListItem button onClick={handleLogout}>
+                <ListItem button onClick={handleLogout} sx={{ color: "red" }}>
+                  <ExitToAppIcon />
                   <ListItemText primary="Logout" />
                 </ListItem>
               ) : (
@@ -114,25 +138,46 @@ function Header({ toggleThemeMode, themeMode }) {
           </Drawer>
         </Hidden>
         <Hidden mdDown>
-          {/* Show "Dashboard" and "Devices" on larger screens */}
           {userInfo && (
             <>
-              <Button color="inherit" component={Link} to="/">
+              <Button
+                color="inherit"
+                component={Link}
+                to="/"
+              >
                 Dashboard
               </Button>
-              <Button color="inherit" component={Link} to="/devices">
+              <Button
+                color="inherit"
+                component={Link}
+                to="/devices"
+              >
                 Devices
               </Button>
+              <Button
+                color="inherit"
+                onClick={handleUsernameClick}
+                aria-controls="user-menu"
+                aria-haspopup="true"
+              >
+                {userInfo.name}
+              </Button>
+              <Menu
+                id="user-menu"
+                anchorEl={anchorEl}
+                keepMounted
+                open={Boolean(anchorEl)}
+                onClose={handleUsernameClose}
+              >
+                <MenuItem onClick={handleUsernameClose}>Profile</MenuItem>
+                <MenuItem onClick={handleUsernameClose}>Add new User</MenuItem>
+                <MenuItem onClick={handleLogout} className="text-danger">
+                  Logout <ExitToAppIcon />
+                </MenuItem>
+              </Menu>
             </>
           )}
-          <IconButton onClick={toggleThemeMode} color="inherit">
-            {themeMode === "dark" ? <Brightness7Icon /> : <Brightness4Icon />}
-          </IconButton>
-          {userInfo ? (
-            <Button color="inherit" onClick={handleLogout}>
-              Logout
-            </Button>
-          ) : (
+          {!userInfo && (
             <Button
               color="inherit"
               component={Link}
