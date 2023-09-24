@@ -1,131 +1,323 @@
-import React, { useEffect, useState } from 'react'
-import Hero from '../src/components/Hero'
-import { useSelector, useDispatch} from 'react-redux'
-import { Card, Col, Container, Row } from 'react-bootstrap'
-import CardHeader from 'react-bootstrap/esm/CardHeader'
-import axios from 'axios'
-import { FaDesktop, FaLaptop, FaMobileAlt } from 'react-icons/fa'
-import { HiCpuChip } from 'react-icons/hi2'
+import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import axios from 'axios';
+import { Link } from 'react-router-dom';
+import { Card, Grid, Paper, Typography } from '@mui/material';
+import {
+  FaDesktop,
+  FaLaptop,
+  FaMobileAlt,
+  FaChartPie,
+  FaUser,
+} from 'react-icons/fa';
+import { HiCpuChip } from 'react-icons/hi2';
+import ReactApexChart from 'react-apexcharts';
 
 const Home = () => {
-  const { userInfo } = useSelector((state) => state.auth)
+  const { userInfo } = useSelector((state) => state.auth);
 
-  const desktop = async () => {
+  const fetchDeviceCounts = async () => {
     try {
-      const response = await axios.get('http://localhost:8000/api/devices/dashboard/desktopCount');
-      return response.data
-    } catch (error) {
-      console.error('Error fetching desktop count:', error)
-      return 0
-    }
-  }
-
-  const laptop = async () => {
-    try {
-      const response = await axios.get('http://localhost:8000/api/devices/dashboard/laptopCount');
-      return response.data
-    } catch (error) {
-      console.error('Error fetching laptop count:', error)
-      return 0
-    }
-  }
-
-  const phone = async () => {
-    try {
-      const response = await axios.get('http://localhost:8000/api/devices/dashboard/phoneCount');
-      return response.data
-    } catch (error) {
-      console.error('Error fetching phone count:', error)
-      return 0
-    }
-  }
-
-  const devices = async () => {
-    try {
-      const response = await axios.get('http://localhost:8000/api/devices/dashboard/deviceCount');
-      return response.data
-    } catch (error) {
-      console.error('Error fetching phone count:', error)
-      return 0
-    }
-  }
-
+      const desktopCountResponse = await axios.get('http://localhost:8000/api/devices/dashboard/desktopCount');
+      const laptopCountResponse = await axios.get('http://localhost:8000/api/devices/dashboard/laptopCount');
+      const phoneCountResponse = await axios.get('http://localhost:8000/api/devices/dashboard/phoneCount');
   
+      const desktopCount = desktopCountResponse.data;
+      const laptopCount = laptopCountResponse.data;
+      const phoneCount = phoneCountResponse.data;
+  
+      return { desktopCount, laptopCount, phoneCount };
+    } catch (error) {
+      console.error('Error fetching device counts:', error);
+      return { desktopCount: 0, laptopCount: 0, phoneCount: 0 };
+    }
+  };
+
+  const [chartData, setChartData] = useState({
+    options: {
+      chart: {
+        id: 'devices-bar-chart',
+      },
+      xaxis: {
+        categories: ['Desktops', 'Laptops', 'Mobile Phones'],
+      },
+    },
+    series: [
+      {
+        name: 'Devices',
+        data: [0, 0, 0], // Initial data, will be updated after fetching
+      },
+    ],
+  });
+  
+  useEffect(() => {
+    fetchDeviceCounts().then(({ desktopCount, laptopCount, phoneCount }) => {
+      setChartData((prevChartData) => ({
+        ...prevChartData,
+        series: [
+          {
+            ...prevChartData.series[0],
+            data: [desktopCount, laptopCount, phoneCount],
+          },
+        ],
+      }));
+    });
+  }, []);
+  
+  
+
+  const fetchData = async (url) => {
+    try {
+      const response = await axios.get(url);
+      return response.data;
+    } catch (error) {
+      console.error(`Error fetching data from ${url}:`, error);
+      return 0;
+    }
+  };
+
   const [desktopCount, setDesktopCount] = useState('');
   const [laptopCount, setLaptopCount] = useState('');
   const [phoneCount, setPhoneCount] = useState('');
   const [deviceCount, setDeviceCount] = useState('');
 
-  // 4. Use useEffect to fetch data when the component mounts
   useEffect(() => {
-    desktop().then((count) => {
-      setDesktopCount(count)
-    });
-    laptop().then((count) => {
-      setLaptopCount(count)
-    });
-    phone().then((count) => {
-      setPhoneCount(count)
-    });
-    devices().then((count) => {
-      setDeviceCount(count)
-    });
-  }, [])
+    fetchData('http://localhost:8000/api/devices/dashboard/desktopCount').then(
+      (count) => {
+        setDesktopCount(count);
+      }
+    );
+    fetchData('http://localhost:8000/api/devices/dashboard/laptopCount').then(
+      (count) => {
+        setLaptopCount(count);
+      }
+    );
+    fetchData('http://localhost:8000/api/devices/dashboard/phoneCount').then(
+      (count) => {
+        setPhoneCount(count);
+      }
+    );
+    fetchData('http://localhost:8000/api/devices/dashboard/deviceCount').then(
+      (count) => {
+        setDeviceCount(count);
+      }
+    );
+  }, []);
 
   return (
-    <>
+    <div style={{ padding: '24px' }}>
       {userInfo ? (
         <>
-          <Container>
-            <Row className='text-nowrap'>
-              <Col xs={12 } md={6} lg={6} xl={3}>
-                <Card className='card mt-3 text-center shadow border border-success border-3'>
-                  <CardHeader className='bg-success text-light py-5'><span className='h4'><strong><HiCpuChip className='me-2' /> TOTAL DEVICES</strong></span></CardHeader>
-                  <Card.Body>
-                    <span className='h1'><strong>{deviceCount}</strong></span>
-                  </Card.Body>
-                </Card>
-              </Col>
+          <Grid container spacing={3}>
+            <Grid item xs={12} sm={6} md={6} lg={3}>
+              <Card
+                elevation={3}
+                sx={{
+                  height: '100%',
+                  display: 'flex',
+                  flexDirection: 'column',
+                }}
+              >
+                <Paper
+                  elevation={0}
+                  sx={{
+                    background:
+                      'linear-gradient(135deg, #40e0d0 0%, #ff8c00 100%)',
+                    color: 'white',
+                    padding: '16px',
+                  }}
+                >
+                  <FaChartPie style={{ fontSize: '2rem' }} />
+                  <Typography variant="h6" gutterBottom>
+                    Dashboard Stats
+                  </Typography>
+                </Paper>
+                <div
+                  style={{
+                    flex: 1,
+                    padding: '16px',
+                    textAlign: 'center',
+                  }}
+                >
+                  <Typography variant="h4">
+                    <strong>{deviceCount}</strong>
+                  </Typography>
+                  <Typography variant="body2" color="textSecondary">
+                    Total Devices
+                  </Typography>
+                </div>
+              </Card>
+            </Grid>
 
-              <Col xs={12 } md={6} lg={6} xl={3}>
-                <Card className='card mt-3 text-center shadow border border-primary border-3'>
-                  <CardHeader className='bg-primary text-light py-5'><span className='h4'><strong><FaDesktop className='me-2' /> DESKTOPS</strong></span></CardHeader>
-                  <Card.Body>
-                    <span className='h1'><strong>{desktopCount}</strong></span>
-                  </Card.Body>
-                </Card>
-              </Col>
+            <Grid item xs={12} sm={6} md={6} lg={3}>
+              <Card
+                elevation={3}
+                sx={{
+                  height: '100%',
+                  display: 'flex',
+                  flexDirection: 'column',
+                }}
+              >
+                <Paper
+                  elevation={0}
+                  sx={{
+                    background:
+                      'linear-gradient(135deg, #2e8b57 0%, #3cb371 100%)',
+                    color: 'white',
+                    padding: '16px',
+                  }}
+                >
+                  <HiCpuChip style={{ fontSize: '2rem' }} />
+                  <Typography variant="h6" gutterBottom>
+                    Desktops
+                  </Typography>
+                </Paper>
+                <div
+                  style={{
+                    flex: 1,
+                    padding: '16px',
+                    textAlign: 'center',
+                  }}
+                >
+                  <Typography variant="h4">
+                    <strong>{desktopCount}</strong>
+                  </Typography>
+                  <Typography variant="body2" color="textSecondary">
+                    Desktop Computers
+                  </Typography>
+                </div>
+              </Card>
+            </Grid>
 
-              <Col xs={12 } md={6} lg={6} xl={3}>
-                <Card className='card mt-3 text-center shadow border border-info border-3'>
-                  <CardHeader className='bg-info text-light py-5'><span className='h4'><strong><FaLaptop className='me-2'/> LAPTOPS</strong></span></CardHeader>
-                  <Card.Body>
-                    <span className='h1'><strong>{laptopCount}</strong></span>
-                  </Card.Body>
-                </Card>
-              </Col>
+            <Grid item xs={12} sm={6} md={6} lg={3}>
+              <Card
+                elevation={3}
+                sx={{
+                  height: '100%',
+                  display: 'flex',
+                  flexDirection: 'column',
+                }}
+              >
+                <Paper
+                  elevation={0}
+                  sx={{
+                    background:
+                      'linear-gradient(135deg, #1e90ff 0%, #4169e1 100%)',
+                    color: 'white',
+                    padding: '16px',
+                  }}
+                >
+                  <FaLaptop style={{ fontSize: '2rem' }} />
+                  <Typography variant="h6" gutterBottom>
+                    Laptops
+                  </Typography>
+                </Paper>
+                <div
+                  style={{
+                    flex: 1,
+                    padding: '16px',
+                    textAlign: 'center',
+                  }}
+                >
+                  <Typography variant="h4">
+                    <strong>{laptopCount}</strong>
+                  </Typography>
+                  <Typography variant="body2" color="textSecondary">
+                    Laptop Computers
+                  </Typography>
+                </div>
+              </Card>
+            </Grid>
 
-              <Col xs={12 } md={6} lg={6} xl={3}>
-                <Card className='card mt-3 text-center shadow border border-secondary border-3'>
-                  <CardHeader className='bg-secondary text-light py-5'><span className='h4'><strong><FaMobileAlt className='me-2'/> MOBILE PHONES</strong></span></CardHeader>
-                  <Card.Body>
-                    <span className='h1'><strong>{phoneCount}</strong></span>
-                  </Card.Body>
-                </Card>
-              </Col>
-
-            </Row>
-            
-          </Container>
+            <Grid item xs={12} sm={6} md={6} lg={3}>
+              <Card
+                elevation={3}
+                sx={{
+                  height: '100%',
+                  display: 'flex',
+                  flexDirection: 'column',
+                }}
+              >
+                <Paper
+                  elevation={0}
+                  sx={{
+                    background:
+                      'linear-gradient(135deg, #8a2be2 0%, #9932cc 100%)',
+                    color: 'white',
+                    padding: '16px',
+                  }}
+                >
+                  <FaMobileAlt style={{ fontSize: '2rem' }} />
+                  <Typography variant="h6" gutterBottom>
+                    Mobile Phones
+                  </Typography>
+                </Paper>
+                <div
+                  style={{
+                    flex: 1,
+                    padding: '16px',
+                    textAlign: 'center',
+                  }}
+                >
+                  <Typography variant="h4">
+                    <strong>{phoneCount}</strong>
+                  </Typography>
+                  <Typography variant="body2" color="textSecondary">
+                    Mobile Devices
+                  </Typography>
+                </div>
+              </Card>
+            </Grid>
+          </Grid>
+          
+          {/* Add the bar chart below */}
+          <Grid item xs={12} sm={12} md={12} lg={12}>
+            <Card
+              elevation={3}
+              sx={{
+                marginTop: '20px',
+                height: '100%',
+                display: 'flex',
+                flexDirection: 'column',
+              }}
+            >
+              <Paper
+                elevation={0}
+                sx={{
+                  background: 'linear-gradient(135deg, #ff4500 0%, #ff8c00 100%)',
+                  color: 'white',
+                  padding: '16px',
+                }}
+              >
+                <FaChartPie style={{ fontSize: '2rem' }} />
+                <Typography variant="h6" gutterBottom>
+                  Device Chart
+                </Typography>
+              </Paper>
+              <div
+                style={{
+                  flex: 1,
+                  padding: '16px',
+                  textAlign: 'center',
+                }}
+              >
+                <ReactApexChart
+                  options={chartData.options}
+                  series={chartData.series}
+                  type="bar"
+                  height={350}
+                />
+              </div>
+            </Card>
+          </Grid>
         </>
       ) : (
-        <>
-          <Hero />
-        </>
+        <div>
+          {/* Render your Hero component here */}
+        </div>
       )}
-        
-    </>
-  )
-}
+    </div>
+  );
+};
 
-export default Home
+export default Home;
