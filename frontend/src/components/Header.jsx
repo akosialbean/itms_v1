@@ -1,11 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
   AppBar,
-  Box,
   Toolbar,
   Typography,
   Button,
   IconButton,
+  Box,
+  Hidden,
   Drawer,
   List,
   ListItem,
@@ -14,63 +15,77 @@ import {
 import MenuIcon from "@mui/icons-material/Menu";
 import Brightness4Icon from "@mui/icons-material/Brightness4";
 import Brightness7Icon from "@mui/icons-material/Brightness7";
+import { Link } from "react-router-dom";
 
-function Header({ toggleThemeMode, themeMode }) {
-  const [drawerOpen, setDrawerOpen] = React.useState(false);
-  const [screenWidth, setScreenWidth] = React.useState(window.innerWidth);
+function MyAppBar({ toggleThemeMode, themeMode, isLoggedIn, handleLogout }) {
+  const [drawerOpen, setDrawerOpen] = useState(false);
 
   const toggleDrawer = () => {
     setDrawerOpen(!drawerOpen);
   };
 
-  const handleResize = () => {
-    setScreenWidth(window.innerWidth);
+  const handleLoginClick = () => {
+    toggleDrawer(); // Close the drawer when navigating to login
   };
 
-  useEffect(() => {
-    handleResize(); // Check initial screen size
-    window.addEventListener("resize", handleResize);
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
-
   return (
-    <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static">
-        <Toolbar sx={{ justifyContent: "space-between" }}>
-          <Toolbar disableGutters>
-            {/* Logo and title */}
-            <img
-              src="../it.png"
-              alt="Logo"
-              style={{ width: "45px", marginRight: "1rem" }}
-            />
-            <Typography
-              variant="h6"
-              noWrap
-              component="a"
-              href="/"
-              sx={{
-                mr: 2,
-                fontFamily: "monospace",
-                fontWeight: 700,
-                letterSpacing: ".2rem",
-                color: "inherit",
-                textDecoration: "none",
-              }}
-            >
-              ITMS
-            </Typography>
-          </Toolbar>
-          <Toolbar
-            sx={{
-              display: "flex",
-              justifyContent: "flex-end",
-            }}
+    <AppBar position="static">
+      <Toolbar>
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+          }}
+        >
+          <img
+            src="../it.png"
+            alt="Logo"
+            style={{ width: "50px", marginRight: "1rem" }}
+          />
+          <Typography
+            variant="h6"
+            noWrap
+            component={Link}
+            to="/"
+            sx={{ textDecoration: "none", color: "inherit" }}
           >
-            {/* Toggle Theme Icon */}
-            {screenWidth >= 899 && (
+            ITMS
+          </Typography>
+        </Box>
+        <Box sx={{ flexGrow: 1 }} />
+        <Hidden lgDown>
+          <IconButton onClick={toggleThemeMode} color="inherit">
+            {themeMode === "dark" ? (
+              <Brightness7Icon />
+            ) : (
+              <Brightness4Icon />
+            )}
+          </IconButton>
+          {isLoggedIn ? (
+            <Button color="inherit" onClick={handleLogout}>
+              Logout
+            </Button>
+          ) : (
+            <Button
+              color="inherit"
+              component={Link}
+              to="/login"
+              sx={{ textDecoration: "none", color: "inherit" }}
+            >
+              Login
+            </Button>
+          )}
+        </Hidden>
+        <Hidden lgUp>
+          <IconButton color="inherit" onClick={toggleDrawer}>
+            <MenuIcon />
+          </IconButton>
+        </Hidden>
+      </Toolbar>
+      <Hidden lgUp>
+        <Drawer anchor="right" open={drawerOpen} onClose={toggleDrawer}>
+          <List>
+            <ListItem>
               <IconButton onClick={toggleThemeMode} color="inherit">
                 {themeMode === "dark" ? (
                   <Brightness7Icon />
@@ -78,59 +93,26 @@ function Header({ toggleThemeMode, themeMode }) {
                   <Brightness4Icon />
                 )}
               </IconButton>
-            )}
-            {/* Login Button */}
-            {screenWidth >= 899 ? (
-              <Button color="inherit">Login</Button>
-            ) : (
-              <IconButton
-                size="large"
-                edge="end"
-                color="inherit"
-                aria-label="menu"
-                sx={{
-                  display: { xs: "block", sm: "block", md: "none" },
-                  ml: 2,
-                }}
-                onClick={toggleDrawer}
-              >
-                <MenuIcon />
-              </IconButton>
-            )}
-          </Toolbar>
-          <Drawer
-            anchor="right"
-            open={drawerOpen}
-            onClose={toggleDrawer}
-            sx={{
-              "& .MuiDrawer-paper": { boxSizing: "border-box", width: 250 },
-            }}
-          >
-            <List>
-              <ListItem>
-                {/* Toggle Theme Icon (inside the drawer) */}
-                {screenWidth < 899 && (
-                  <IconButton onClick={toggleThemeMode} color="inherit">
-                    {themeMode === "dark" ? (
-                      <Brightness7Icon />
-                    ) : (
-                      <Brightness4Icon />
-                    )}
-                  </IconButton>
-                )}
+            </ListItem>
+            {isLoggedIn ? (
+              <ListItem button onClick={handleLogout}>
+                <ListItemText primary="Logout" />
               </ListItem>
-              {/* Login Button (inside the drawer) */}
-              {screenWidth < 899 && (
-                <ListItem button onClick={toggleDrawer}>
-                  <ListItemText primary="Login" />
-                </ListItem>
-              )}
-            </List>
-          </Drawer>
-        </Toolbar>
-      </AppBar>
-    </Box>
+            ) : (
+              <ListItem
+                button
+                component={Link}
+                to="/login"
+                onClick={handleLoginClick}
+              >
+                <ListItemText primary="Login" />
+              </ListItem>
+            )}
+          </List>
+        </Drawer>
+      </Hidden>
+    </AppBar>
   );
 }
 
-export default Header;
+export default MyAppBar;
