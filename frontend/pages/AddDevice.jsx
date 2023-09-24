@@ -77,7 +77,7 @@ const AddDevice = () => {
             <Form onSubmit={handleSubmit}>
               <Container>
                 <Row>
-                  <Col lg={4}>
+                  <Col md={4}>
                     <Form.Group className="my-2" controlId="d_type">
                       <Form.Label>Type</Form.Label>
                       <Form.Select
@@ -94,7 +94,7 @@ const AddDevice = () => {
                     </Form.Group>
                   </Col>
 
-                  <Col lg={4}>
+                  <Col md={4}>
                     <Form.Group className="my-2" controlId="d_brand">
                       <Form.Label>Brand</Form.Label>
                       <Form.Control
@@ -106,7 +106,7 @@ const AddDevice = () => {
                     </Form.Group>
                   </Col>
 
-                  <Col lg={4}>
+                  <Col md={4}>
                     <Form.Group className="my-2" controlId="d_model">
                       <Form.Label>Model</Form.Label>
                       <Form.Control
@@ -119,7 +119,7 @@ const AddDevice = () => {
                   </Col>
                 </Row>
                 <Row>
-                  <Col lg={6}>
+                  <Col md={6}>
                     <Form.Group className="my-2" controlId="d_sn">
                       <Form.Label>Serial Number</Form.Label>
                       <Form.Control
@@ -130,7 +130,7 @@ const AddDevice = () => {
                       ></Form.Control>
                     </Form.Group>
                   </Col>
-                  <Col lg={6}>
+                  <Col md={6}>
                     <Form.Group className="my-2" controlId="d_hostName">
                       <Form.Label>Host Name</Form.Label>
                       <Form.Control
@@ -144,7 +144,7 @@ const AddDevice = () => {
                 </Row>
                 <hr />
                 <Row>
-                  <Col lg={6}>
+                  <Col md={6}>
                     <Form.Group className="my-2" controlId="d_ipAddress">
                       <Form.Label>IP Address</Form.Label>
                       <Form.Select
@@ -160,7 +160,7 @@ const AddDevice = () => {
                       </Form.Select>
                     </Form.Group>
                   </Col>
-                  <Col lg={6}>
+                  <Col md={6}>
                     <Form.Group className="my-2" controlId="d_macAddress">
                       <Form.Label>MAC Address</Form.Label>
                       <Form.Control
@@ -175,7 +175,7 @@ const AddDevice = () => {
 
                 <hr />
                 <Row>
-                  <Col lg={6}>
+                  <Col md={6}>
                     <Form.Group
                       className="my-2"
                       controlId="d_assignedToDepartment"
@@ -193,7 +193,7 @@ const AddDevice = () => {
                       ></Form.Control>
                     </Form.Group>
                   </Col>
-                  <Col lg={6}>
+                  <Col md={6}>
                     <Form.Group
                       className="my-2"
                       controlId="d_assignedToEmployee"
