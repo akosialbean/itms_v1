@@ -39,8 +39,7 @@ const App = () => {
       <ToastContainer />
         <Header toggleThemeMode={toggleThemeMode} themeMode={themeMode} />
       <Container className="mt-5 pt-5">
-        <TestLoginPage />
-        <TestRegisterPage />
+        <Outlet/>
       </Container>
     </ThemeProvider>
   );
