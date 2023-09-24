@@ -69,6 +69,8 @@ const LoginPage = () => {
         <CardHeader title="Sign In" />
         <CardContent>
           <form onSubmit={formik.handleSubmit}>
+            <Grid container spacing={2}>
+            <Grid item xs={12}>
             <TextField
               variant="outlined"
               margin="normal"
@@ -84,6 +86,8 @@ const LoginPage = () => {
               helperText={formik.touched.email && formik.errors.email}
               sx={{marginTop: 1, marginBottom: 3}}
             />
+            </Grid>
+            <Grid item xs={12}>
             <TextField
               variant="outlined"
               margin="normal"
@@ -110,6 +114,8 @@ const LoginPage = () => {
                 ),
               }}
             />
+            </Grid>
+            </Grid>
             {isLoading ? (
               <CircularProgress size={24} />
             ) : (
@@ -123,6 +129,7 @@ const LoginPage = () => {
                 Sign In
               </Button>
             )}
+
             <Grid container justifyContent="flex-end">
               <Grid item 
                 sx={{ marginTop: 4 }}>
