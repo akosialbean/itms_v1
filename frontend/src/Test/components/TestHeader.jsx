@@ -1,22 +1,28 @@
-import * as React from "react";
-import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
-import IconButton from "@mui/material/IconButton";
+import React, { useState, useEffect } from "react";
+import {
+  AppBar,
+  Box,
+  Toolbar,
+  Typography,
+  Button,
+  IconButton,
+  Drawer,
+  List,
+  ListItem,
+  ListItemText,
+} from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
-import Drawer from "@mui/material/Drawer";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemText from "@mui/material/ListItemText";
+import Brightness4Icon from "@mui/icons-material/Brightness4";
+import Brightness7Icon from "@mui/icons-material/Brightness7";
 
-function TestHeader() {
+function TestHeader({ toggleThemeMode, themeMode }) {
   const [drawerOpen, setDrawerOpen] = React.useState(false);
-  const [showLoginButton, setShowLoginButton] = React.useState(true);
+  const [showLoginButton, setShowLoginButton] = React.useState(false);
+  const [showPassword, setShowPassword] = React.useState(false);
 
   const toggleDrawer = () => {
     setDrawerOpen(!drawerOpen);
+    setShowLoginButton(false); // Hide the login button when the drawer is opened
   };
 
   const handleResize = () => {
@@ -31,6 +37,10 @@ function TestHeader() {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -49,7 +59,7 @@ function TestHeader() {
               href="/"
               sx={{
                 mr: 2,
-                display: { xs: "none", sm: "none", md: "flex" }, // Hide on xs and sm, display on md
+                display: { xs: "none", sm: "none", md: "flex" },
                 fontFamily: "monospace",
                 fontWeight: 700,
                 letterSpacing: ".2rem",
@@ -60,24 +70,39 @@ function TestHeader() {
               ITMS
             </Typography>
           </Toolbar>
-          {/* Display the IconButton on xs, sm, hide on md */}
-          {showLoginButton ? (
-            <Button color="inherit">Login</Button>
-          ) : (
+          <Toolbar
+            sx={{
+              display: "flex",
+              justifyContent: "flex-end", // Align to the end
+            }}
+          >
             <IconButton
               size="large"
               edge="end"
               color="inherit"
               aria-label="menu"
               sx={{
-                display: { xs: "block", sm: "block", md: "none" }, // Show on xs, sm, hide on md
+                display: { xs: "block", sm: "block", md: "none" },
                 ml: 2,
               }}
               onClick={toggleDrawer}
             >
               <MenuIcon />
             </IconButton>
-          )}
+            <IconButton
+              onClick={toggleThemeMode}
+              color="inherit"
+            >
+              {themeMode === "dark" ? (
+                <Brightness7Icon />
+              ) : (
+                <Brightness4Icon />
+              )}
+            </IconButton>
+            {showLoginButton && (
+              <Button color="inherit">Login</Button>
+            )}
+          </Toolbar>
           <Drawer
             anchor="right"
             open={drawerOpen}
@@ -85,9 +110,23 @@ function TestHeader() {
             sx={{ "& .MuiDrawer-paper": { boxSizing: "border-box", width: 250 } }}
           >
             <List>
-              <ListItem button onClick={toggleDrawer}>
-                <ListItemText primary="Login" />
+              <ListItem>
+                <IconButton
+                  onClick={toggleThemeMode}
+                  color="inherit"
+                >
+                  {themeMode === "dark" ? (
+                    <Brightness7Icon />
+                  ) : (
+                    <Brightness4Icon />
+                  )}
+                </IconButton>
               </ListItem>
+              {showLoginButton && (
+                <ListItem button onClick={toggleDrawer}>
+                  <ListItemText primary="Login" />
+                </ListItem>
+              )}
             </List>
           </Drawer>
         </Toolbar>
