@@ -19,6 +19,10 @@ import MenuIcon from "@mui/icons-material/Menu";
 import Brightness4Icon from "@mui/icons-material/Brightness4";
 import Brightness7Icon from "@mui/icons-material/Brightness7";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
+import BarChartIcon from "@mui/icons-material/BarChart";
+import DevicesIcon from "@mui/icons-material/Devices";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+
 
 import { useSelector, useDispatch } from "react-redux";
 import { useLogoutMutation } from "../slices/usersApiSlice";
@@ -94,6 +98,7 @@ function Header({ toggleThemeMode, themeMode }) {
                     to="/"
                     onClick={toggleDrawer}
                   >
+                    <BarChartIcon />
                     <ListItemText primary="Dashboard" />
                   </ListItem>
                   <ListItem
@@ -102,6 +107,7 @@ function Header({ toggleThemeMode, themeMode }) {
                     to="/devices"
                     onClick={toggleDrawer}
                   >
+                    <DevicesIcon />
                     <ListItemText primary="Devices" />
                   </ListItem>
                 </>
@@ -140,25 +146,20 @@ function Header({ toggleThemeMode, themeMode }) {
         <Hidden mdDown>
           {userInfo && (
             <>
-              <Button
-                color="inherit"
-                component={Link}
-                to="/"
-              >
+              <Button color="inherit" component={Link} to="/">
+                <BarChartIcon />
                 Dashboard
               </Button>
-              <Button
-                color="inherit"
-                component={Link}
-                to="/devices"
-              >
+              <Button color="inherit" component={Link} to="/devices">
+                <DevicesIcon />
                 Devices
               </Button>
               <Button
                 color="inherit"
                 onClick={handleUsernameClick}
                 aria-controls="user-menu"
-                aria-haspopup="true"
+                aria-haspopup="true" 
+                endIcon={<ArrowDropDownIcon />}
               >
                 {userInfo.name}
               </Button>
