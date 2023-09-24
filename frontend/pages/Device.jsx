@@ -126,7 +126,7 @@ const Device = () => {
                   <h1 className="text-center">Update Device Details</h1>
                   <Form onSubmit={handleSubmit}>
                     <Row>
-                      <Col lg={4}>
+                      <Col md={6} lg={4}>
                         <Form.Group className="my-2" controlId="d_type">
                           <Form.Label>Type</Form.Label>
                           <Form.Select
@@ -142,7 +142,7 @@ const Device = () => {
                           </Form.Select>
                         </Form.Group>
                       </Col>
-                      <Col lg={4}>
+                      <Col md={6} lg={4}>
                         <Form.Group className="my-2" controlId="d_brand">
                           <Form.Label>Brand</Form.Label>
                           <Form.Control
@@ -167,7 +167,7 @@ const Device = () => {
                     </Row>
 
                     <Row>
-                      <Col lg={6}>
+                      <Col md={6}>
                         <Form.Group className="my-2" controlId="d_sn">
                           <Form.Label>Serial Number</Form.Label>
                           <Form.Control
@@ -178,7 +178,7 @@ const Device = () => {
                           ></Form.Control>
                         </Form.Group>
                       </Col>
-                      <Col lg={6}>
+                      <Col md={6}>
                         <Form.Group className="my-2" controlId="d_hostName">
                           <Form.Label>Host Name</Form.Label>
                           <Form.Control
@@ -194,7 +194,7 @@ const Device = () => {
                     <hr />
 
                     <Row>
-                      <Col lg={6}>
+                      <Col md={6}>
                         <Form.Group
                           className="my-2"
                           controlId="d_ipAddressUpdate"
@@ -221,7 +221,7 @@ const Device = () => {
                           ></Form.Control>
                         </Form.Group>
                       </Col>
-                      <Col lg={6}>
+                      <Col md={6}>
                         <Form.Group className="my-2" controlId="d_macAddress">
                           <Form.Label>MAC Address</Form.Label>
                           <Form.Control
