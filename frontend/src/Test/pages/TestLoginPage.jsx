@@ -84,7 +84,6 @@ const LoginPage = () => {
               onChange={formik.handleChange}
               error={formik.touched.email && Boolean(formik.errors.email)}
               helperText={formik.touched.email && formik.errors.email}
-              sx={{marginTop: 1, marginBottom: 3}}
             />
             </Grid>
             <Grid item xs={12}>
