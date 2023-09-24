@@ -15,9 +15,14 @@ import {
 import MenuIcon from "@mui/icons-material/Menu";
 import Brightness4Icon from "@mui/icons-material/Brightness4";
 import Brightness7Icon from "@mui/icons-material/Brightness7";
-import { Link } from "react-router-dom";
 
-function MyAppBar({ toggleThemeMode, themeMode, isLoggedIn, handleLogout }) {
+import { useSelector, useDispatch } from "react-redux";
+import { useLogoutMutation } from "../slices/usersApiSlice";
+import { logout } from "../slices/authSlice";
+
+import { Link, useNavigate  } from "react-router-dom";
+
+function MyAppBar({ toggleThemeMode, themeMode }) {
   const [drawerOpen, setDrawerOpen] = useState(false);
 
   const toggleDrawer = () => {
@@ -26,6 +31,20 @@ function MyAppBar({ toggleThemeMode, themeMode, isLoggedIn, handleLogout }) {
 
   const handleLoginClick = () => {
     toggleDrawer(); // Close the drawer when navigating to login
+  };
+
+  const { userInfo } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const [logoutApiCall] = useLogoutMutation();
+  const handleLogout = async () => {
+    try {
+      await logoutApiCall().unwrap();
+      dispatch(logout());
+      navigate("/");
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
@@ -61,7 +80,7 @@ function MyAppBar({ toggleThemeMode, themeMode, isLoggedIn, handleLogout }) {
               <Brightness4Icon />
             )}
           </IconButton>
-          {isLoggedIn ? (
+          {userInfo ? (
             <Button color="inherit" onClick={handleLogout}>
               Logout
             </Button>
@@ -94,7 +113,7 @@ function MyAppBar({ toggleThemeMode, themeMode, isLoggedIn, handleLogout }) {
                 )}
               </IconButton>
             </ListItem>
-            {isLoggedIn ? (
+            {userInfo ? (
               <ListItem button onClick={handleLogout}>
                 <ListItemText primary="Logout" />
               </ListItem>
