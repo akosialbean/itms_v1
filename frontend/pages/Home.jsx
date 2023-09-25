@@ -10,7 +10,6 @@ import {
   FaChartBar,
   FaUser,
 } from "react-icons/fa";
-import { HiCpuChip } from "react-icons/hi2";
 import ReactApexChart from "react-apexcharts";
 import { useTheme } from "@mui/material/styles";
 
@@ -201,7 +200,7 @@ const Home = () => {
                     padding: "16px",
                   }}
                 >
-                  <HiCpuChip style={{ fontSize: "2rem" }} />
+                  <FaDesktop style={{ fontSize: "2rem" }} />
                   <Typography variant="h6" gutterBottom>
                     Desktops
                   </Typography>
@@ -324,7 +323,6 @@ const Home = () => {
                     padding: "16px",
                   }}
                 >
-                  <FaChartBar style={{ fontSize: "2rem" }} />
                   <Typography variant="h6" gutterBottom>
                     Device Chart
                   </Typography>
