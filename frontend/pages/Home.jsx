@@ -7,7 +7,7 @@ import {
   FaDesktop,
   FaLaptop,
   FaMobileAlt,
-  FaChartPie,
+  FaChartBar,
   FaUser,
 } from "react-icons/fa";
 import { HiCpuChip } from "react-icons/hi2";
@@ -63,12 +63,19 @@ const Home = () => {
           },
         },
       },
-
       tooltip: {
         theme: theme.palette.mode, // Set tooltip theme based on theme mode
       },
-
       colors: [theme.palette.mode === "dark" ? "#ff4500" : "#ff8c00"], // Set bar color based on theme mode
+      legend: {
+        labels: {
+          colors: theme.palette.mode === 'dark' ? '#fff' : '#333', // Set legend text color based on theme mode
+        },
+        markers: {
+          fillColors: theme.palette.mode === 'dark' ? '#333' : '#fff', // Set legend marker background color based on theme mode
+          strokeColors: theme.palette.mode === 'dark' ? '#fff' : '#333', // Set legend marker border color based on theme mode
+        },
+      },
     },
     series: [
       {
@@ -77,6 +84,7 @@ const Home = () => {
       },
     ],
   });
+  
 
   useEffect(() => {
     fetchDeviceCounts().then(({ desktopCount, laptopCount, phoneCount }) => {
@@ -153,7 +161,7 @@ const Home = () => {
                     padding: "16px",
                   }}
                 >
-                  <FaChartPie style={{ fontSize: "2rem" }} />
+                  <FaChartBar style={{ fontSize: "2rem" }} />
                   <Typography variant="h6" gutterBottom>
                     Dashboard Stats
                   </Typography>
@@ -316,7 +324,7 @@ const Home = () => {
                     padding: "16px",
                   }}
                 >
-                  <FaChartPie style={{ fontSize: "2rem" }} />
+                  <FaChartBar style={{ fontSize: "2rem" }} />
                   <Typography variant="h6" gutterBottom>
                     Device Chart
                   </Typography>
@@ -341,7 +349,7 @@ const Home = () => {
           </Grid>
         </>
       ) : (
-        <div>{/* Render your Hero component here */}</div>
+        <div></div>
       )}
     </div>
   );
