@@ -4,13 +4,8 @@ import { Outlet } from "react-router-dom";
 import Header from "./components/Header";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import TestLoginPage from "./Test/pages/TestLoginPage";
-import TestRegisterPage from "./Test/pages/TestRegisterPage";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
-import Brightness4Icon from "@mui/icons-material/Brightness4";
-import Brightness7Icon from "@mui/icons-material/Brightness7";
-import IconButton from "@mui/material/IconButton";
 
 const darkTheme = createTheme({
   palette: {

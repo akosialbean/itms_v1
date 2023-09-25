@@ -39,7 +39,6 @@ const RegisterPage = () => {
     initialValues: {
       name: '',
       email: '',
-      oldPassword: '',
       newPassword: '',
       confirmPassword: '',
       showPassword: false,
@@ -47,8 +46,9 @@ const RegisterPage = () => {
     validationSchema: Yup.object({
       name: Yup.string().required('Name is required'),
       email: Yup.string().required('Email is required').email('Invalid email'),
-      oldPassword: Yup.string().required('Old Password is required'),
-      newPassword: Yup.string().required('New Password is required'),
+      newPassword: Yup.string()
+        .required('New Password is required')
+        .min(8, 'Password must be at least 8 characters long'), 
       confirmPassword: Yup.string()
         .oneOf([Yup.ref('newPassword'), null], 'Passwords must match')
         .required('Confirm Password is required'),
@@ -58,7 +58,6 @@ const RegisterPage = () => {
         const res = await register({
           name: values.name,
           email: values.email,
-          oldPassword: values.oldPassword,
           newPassword: values.newPassword,
         }).unwrap();
         dispatch(setCredentials({ ...res }));
@@ -75,7 +74,7 @@ const RegisterPage = () => {
 
   return (
     <Container component="main" maxWidth="xs">
-      <Card sx={{ marginTop: -5 }}>
+      <Card sx={{ marginTop: 8 }}>
         <CardHeader title="Change Password" />
         <CardContent>
           <form onSubmit={formik.handleSubmit}>
@@ -92,6 +91,7 @@ const RegisterPage = () => {
                   autoFocus
                   value={formik.values.name}
                   onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
                   error={formik.touched.name && Boolean(formik.errors.name)}
                   helperText={formik.touched.name && formik.errors.name}
                 />
@@ -107,46 +107,9 @@ const RegisterPage = () => {
                   autoComplete="email"
                   value={formik.values.email}
                   onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
                   error={formik.touched.email && Boolean(formik.errors.email)}
                   helperText={formik.touched.email && formik.errors.email}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  variant="outlined"
-                  margin="normal"
-                  fullWidth
-                  name="oldPassword"
-                  label="Old Password"
-                  type={formik.values.showPassword ? 'text' : 'password'}
-                  id="oldPassword"
-                  autoComplete="current-password"
-                  value={formik.values.oldPassword}
-                  onChange={formik.handleChange}
-                  error={
-                    formik.touched.oldPassword &&
-                    Boolean(formik.errors.oldPassword)
-                  }
-                  helperText={
-                    formik.touched.oldPassword &&
-                    formik.errors.oldPassword
-                  }
-                  InputProps={{
-                    endAdornment: (
-                      <InputAdornment position="end">
-                        <IconButton
-                          onClick={handleShowPassword}
-                          edge="end"
-                        >
-                          {formik.values.showPassword ? (
-                            <Visibility />
-                          ) : (
-                            <VisibilityOff />
-                          )}
-                        </IconButton>
-                      </InputAdornment>
-                    ),
-                  }}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -161,6 +124,7 @@ const RegisterPage = () => {
                   autoComplete="new-password"
                   value={formik.values.newPassword}
                   onChange={formik.handleChange}
+                  onBlur={formik.handleBlur} 
                   error={
                     formik.touched.newPassword &&
                     Boolean(formik.errors.newPassword)
@@ -199,6 +163,7 @@ const RegisterPage = () => {
                   autoComplete="new-password"
                   value={formik.values.confirmPassword}
                   onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
                   error={
                     formik.touched.confirmPassword &&
                     Boolean(formik.errors.confirmPassword)
