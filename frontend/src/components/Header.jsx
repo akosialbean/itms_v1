@@ -27,6 +27,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useLogoutMutation } from "../slices/usersApiSlice";
 import { logout } from "../slices/authSlice";
 import { Link, useNavigate } from "react-router-dom";
+import { LinkContainer } from "react-router-bootstrap"; // Import LinkContainer
 
 function Header({ toggleThemeMode, themeMode }) {
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -45,7 +46,7 @@ function Header({ toggleThemeMode, themeMode }) {
     try {
       await logoutApiCall().unwrap();
       dispatch(logout());
-      navigate("/");
+      navigate("/hero");
     } catch (err) {
       console.log(err);
     }
@@ -91,24 +92,19 @@ function Header({ toggleThemeMode, themeMode }) {
             <List>
               {userInfo && (
                 <>
-                  <ListItem
-                    button
-                    component={Link}
-                    to="/"
-                    onClick={toggleDrawer}
-                  >
-                    <BarChartIcon />
-                    <ListItemText primary="Dashboard" />
-                  </ListItem>
-                  <ListItem
-                    button
-                    component={Link}
-                    to="/devices"
-                    onClick={toggleDrawer}
-                  >
-                    <DevicesIcon />
-                    <ListItemText primary="Devices" />
-                  </ListItem>
+                  {/* Use LinkContainer for navigation */}
+                  <LinkContainer to="/">
+                    <ListItem button onClick={toggleDrawer}>
+                      <BarChartIcon />
+                      <ListItemText primary="Dashboard" />
+                    </ListItem>
+                  </LinkContainer>
+                  <LinkContainer to="/devices">
+                    <ListItem button onClick={toggleDrawer}>
+                      <DevicesIcon />
+                      <ListItemText primary="Devices" />
+                    </ListItem>
+                  </LinkContainer>
                 </>
               )}
               <ListItem button onClick={toggleThemeMode}>
@@ -130,14 +126,12 @@ function Header({ toggleThemeMode, themeMode }) {
                   <ListItemText primary="Logout" />
                 </ListItem>
               ) : (
-                <ListItem
-                  button
-                  component={Link}
-                  to="/login"
-                  onClick={toggleDrawer}
-                >
-                  <ListItemText primary="Login" />
-                </ListItem>
+                // Use LinkContainer for navigation
+                <LinkContainer to="/login">
+                  <ListItem button onClick={toggleDrawer}>
+                    <ListItemText primary="Login" />
+                  </ListItem>
+                </LinkContainer>
               )}
             </List>
           </Drawer>
@@ -145,22 +139,23 @@ function Header({ toggleThemeMode, themeMode }) {
         <Hidden mdDown>
           {userInfo && (
             <>
-              <Button
-                color="inherit"
-                component={Link}
-                to="/"
-                startIcon={<BarChartIcon />}
-              >
-                Dashboard
-              </Button>
-              <Button
-                color="inherit"
-                component={Link}
-                to="/devices"
-                startIcon={<DevicesIcon />}
-              >
-                Devices
-              </Button>
+              {/* Use LinkContainer for navigation */}
+              <LinkContainer to="/">
+                <Button
+                  color="inherit"
+                  startIcon={<BarChartIcon />}
+                >
+                  Dashboard
+                </Button>
+              </LinkContainer>
+              <LinkContainer to="/devices">
+                <Button
+                  color="inherit"
+                  startIcon={<DevicesIcon />}
+                >
+                  Devices
+                </Button>
+              </LinkContainer>
               <Button
                 color="inherit"
                 onClick={toggleThemeMode}
@@ -200,14 +195,15 @@ function Header({ toggleThemeMode, themeMode }) {
             </>
           )}
           {!userInfo && (
-            <Button
-              color="inherit"
-              component={Link}
-              to="/login"
-              sx={{ textDecoration: "none", color: "inherit" }}
-            >
-              Login
-            </Button>
+            // Use LinkContainer for navigation
+            <LinkContainer to="/login">
+              <Button
+                color="inherit"
+                sx={{ textDecoration: "none", color: "inherit" }}
+              >
+                Login
+              </Button>
+            </LinkContainer>
           )}
         </Hidden>
       </Toolbar>

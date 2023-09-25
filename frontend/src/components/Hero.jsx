@@ -7,6 +7,7 @@ const Hero = () => {
   return (
     <>
       <div className="py-5">
+      <LinkContainer to="/">
         <Container className="d-flex justify-content-center w100" fluid>
           <Card
             className="p-5 d-flex flex-column align-items-center hero-card bg-light w-100"
@@ -38,6 +39,7 @@ const Hero = () => {
             </p>
           </Card>
         </Container>
+        </LinkContainer>
       </div>
     </>
   );
