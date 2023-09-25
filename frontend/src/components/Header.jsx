@@ -23,7 +23,6 @@ import BarChartIcon from "@mui/icons-material/BarChart";
 import DevicesIcon from "@mui/icons-material/Devices";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 
-
 import { useSelector, useDispatch } from "react-redux";
 import { useLogoutMutation } from "../slices/usersApiSlice";
 import { logout } from "../slices/authSlice";
@@ -146,19 +145,41 @@ function Header({ toggleThemeMode, themeMode }) {
         <Hidden mdDown>
           {userInfo && (
             <>
-              <Button color="inherit" component={Link} to="/">
-                <BarChartIcon />
+              <Button
+                color="inherit"
+                component={Link}
+                to="/"
+                startIcon={<BarChartIcon />}
+              >
                 Dashboard
               </Button>
-              <Button color="inherit" component={Link} to="/devices">
-                <DevicesIcon />
+              <Button
+                color="inherit"
+                component={Link}
+                to="/devices"
+                startIcon={<DevicesIcon />}
+              >
                 Devices
               </Button>
               <Button
                 color="inherit"
+                onClick={toggleThemeMode}
+                startIcon={
+                  themeMode === "dark" ? (
+                    <Brightness4Icon />
+                  ) : (
+                    <Brightness7Icon />
+                  )
+                }
+              >
+                {themeMode === 'dark' ? 'Light' : 'Dark'}
+              </Button>
+
+              <Button
+                color="inherit"
                 onClick={handleUsernameClick}
                 aria-controls="user-menu"
-                aria-haspopup="true" 
+                aria-haspopup="true"
                 endIcon={<ArrowDropDownIcon />}
               >
                 {userInfo.name}
