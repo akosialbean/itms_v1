@@ -16,7 +16,7 @@ import {
   MenuItem,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import Brightness4Icon from "@mui/icons-material/Brightness4";
 import Brightness7Icon from "@mui/icons-material/Brightness7";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
@@ -28,7 +28,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useLogoutMutation } from "../slices/usersApiSlice";
 import { logout } from "../slices/authSlice";
 import { Link, useNavigate } from "react-router-dom";
-import { LinkContainer } from "react-router-bootstrap"; // Import LinkContainer
+import { LinkContainer } from "react-router-bootstrap";
 
 function Header({ toggleThemeMode, themeMode }) {
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -57,8 +57,11 @@ function Header({ toggleThemeMode, themeMode }) {
     setAnchorEl(event.currentTarget);
   };
 
-  const handleUsernameClose = () => {
+  const handleUsernameClose = (destination) => {
     setAnchorEl(null);
+    if (destination) {
+      navigate(destination);
+    }
   };
 
   return (
@@ -182,8 +185,12 @@ function Header({ toggleThemeMode, themeMode }) {
                 open={Boolean(anchorEl)}
                 onClose={handleUsernameClose}
               >
-                <MenuItem onClick={handleUsernameClose}>Profile</MenuItem>
-                <MenuItem onClick={handleUsernameClose}>Add new User</MenuItem>
+                <MenuItem onClick={() => handleUsernameClose("/profile")}>
+                  Profile
+                </MenuItem>
+                <MenuItem onClick={() => handleUsernameClose("/register")}>
+                  Add new User
+                </MenuItem>
                 <MenuItem onClick={handleLogout} className="text-danger">
                   Logout <ExitToAppIcon />
                 </MenuItem>
