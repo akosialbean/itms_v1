@@ -1,86 +1,249 @@
-import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { Form, Button } from 'react-bootstrap'
-import FormContainer from '../src/components/FormContainer'
-import { useDispatch } from 'react-redux'
-import { toast } from 'react-toastify'
-import Loader from '../src/components/Loader'
-import { useRegisterMutation } from '../src/slices/usersApiSlice'
-import { setCredentials } from '../src/slices/authSlice'
+import React, { useEffect } from 'react';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  Container,
+  Typography,
+  TextField,
+  Button,
+  Grid,
+  Link,
+  CircularProgress,
+  Card,
+  CardContent,
+  CardHeader,
+  InputAdornment,
+  IconButton,
+} from '@mui/material';
+import { useRegisterMutation } from '../src/slices/usersApiSlice';
+import { setCredentials } from '../src/slices/authSlice';
+import { toast } from 'react-toastify';
+import Loader from '../src/components/Loader';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
 
 const RegisterPage = () => {
-    const [name, setName] = useState('')
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
-    const [confirmPassword, setConfirmPassword] = useState('')
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { userInfo } = useSelector((state) => state.auth);
+  const [register, { isLoading }] = useRegisterMutation();
 
-    const navigate = useNavigate()
-    const dispatch = useDispatch()
-
-    // const { userInfo } = useSelector((state) => state.auth)
-
-    const [register, {isLoading}] = useRegisterMutation()
-
-    const handleSubmit = async (e) => {
-        e.preventDefault()
-        if(password !== confirmPassword){
-            toast.error('Passwords do not match')
-        }else{
-            try{
-                const res = await register({
-                    name,
-                    email,
-                    password
-                }).unwrap()
-                dispatch(setCredentials({...res}))
-                navigate('/')
-            }catch(err){
-                toast.error(err?.data?.message || err.error)
-            }
-        }
+  useEffect(() => {
+    if (userInfo) {
+      navigate('/register');
     }
+  }, [navigate, userInfo]);
+
+  const formik = useFormik({
+    initialValues: {
+      name: '',
+      email: '',
+      oldPassword: '',
+      newPassword: '',
+      confirmPassword: '',
+      showPassword: false,
+    },
+    validationSchema: Yup.object({
+      name: Yup.string().required('Name is required'),
+      email: Yup.string().required('Email is required').email('Invalid email'),
+      oldPassword: Yup.string().required('Old Password is required'),
+      newPassword: Yup.string().required('New Password is required'),
+      confirmPassword: Yup.string()
+        .oneOf([Yup.ref('newPassword'), null], 'Passwords must match')
+        .required('Confirm Password is required'),
+    }),
+    onSubmit: async (values) => {
+      try {
+        const res = await register({
+          name: values.name,
+          email: values.email,
+          oldPassword: values.oldPassword,
+          newPassword: values.newPassword,
+        }).unwrap();
+        dispatch(setCredentials({ ...res }));
+        navigate('/');
+      } catch (err) {
+        toast.error(err?.data?.message || err.error);
+      }
+    },
+  });
+
+  const handleShowPassword = () => {
+    formik.setFieldValue('showPassword', !formik.values.showPassword);
+  };
+
   return (
-    <>
-        <FormContainer>
-            <h1>Sign Up</h1>
-            <Form onSubmit={handleSubmit}>
-                <Form.Group className='my-2' controlId='name'>
-                    <Form.Label>Name</Form.Label>
-                    <Form.Control type='text' placeholder='Dodong Skwerut'
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}></Form.Control>
-                </Form.Group>
+    <Container component="main" maxWidth="xs">
+      <Card sx={{ marginTop: -5 }}>
+        <CardHeader title="Change Password" />
+        <CardContent>
+          <form onSubmit={formik.handleSubmit}>
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <TextField
+                  variant="outlined"
+                  margin="normal"
+                  fullWidth
+                  id="name"
+                  label="Name"
+                  name="name"
+                  autoComplete="name"
+                  autoFocus
+                  value={formik.values.name}
+                  onChange={formik.handleChange}
+                  error={formik.touched.name && Boolean(formik.errors.name)}
+                  helperText={formik.touched.name && formik.errors.name}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  variant="outlined"
+                  margin="normal"
+                  fullWidth
+                  id="email"
+                  label="Email"
+                  name="email"
+                  autoComplete="email"
+                  value={formik.values.email}
+                  onChange={formik.handleChange}
+                  error={formik.touched.email && Boolean(formik.errors.email)}
+                  helperText={formik.touched.email && formik.errors.email}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  variant="outlined"
+                  margin="normal"
+                  fullWidth
+                  name="oldPassword"
+                  label="Old Password"
+                  type={formik.values.showPassword ? 'text' : 'password'}
+                  id="oldPassword"
+                  autoComplete="current-password"
+                  value={formik.values.oldPassword}
+                  onChange={formik.handleChange}
+                  error={
+                    formik.touched.oldPassword &&
+                    Boolean(formik.errors.oldPassword)
+                  }
+                  helperText={
+                    formik.touched.oldPassword &&
+                    formik.errors.oldPassword
+                  }
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton
+                          onClick={handleShowPassword}
+                          edge="end"
+                        >
+                          {formik.values.showPassword ? (
+                            <Visibility />
+                          ) : (
+                            <VisibilityOff />
+                          )}
+                        </IconButton>
+                      </InputAdornment>
+                    ),
+                  }}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  variant="outlined"
+                  margin="normal"
+                  fullWidth
+                  name="newPassword"
+                  label="New Password"
+                  type={formik.values.showPassword ? 'text' : 'password'}
+                  id="newPassword"
+                  autoComplete="new-password"
+                  value={formik.values.newPassword}
+                  onChange={formik.handleChange}
+                  error={
+                    formik.touched.newPassword &&
+                    Boolean(formik.errors.newPassword)
+                  }
+                  helperText={
+                    formik.touched.newPassword &&
+                    formik.errors.newPassword
+                  }
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton
+                          onClick={handleShowPassword}
+                          edge="end"
+                        >
+                          {formik.values.showPassword ? (
+                            <Visibility />
+                          ) : (
+                            <VisibilityOff />
+                          )}
+                        </IconButton>
+                      </InputAdornment>
+                    ),
+                  }}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  variant="outlined"
+                  margin="normal"
+                  fullWidth
+                  name="confirmPassword"
+                  label="Confirm Password"
+                  type={formik.values.showPassword ? 'text' : 'password'}
+                  id="confirmPassword"
+                  autoComplete="new-password"
+                  value={formik.values.confirmPassword}
+                  onChange={formik.handleChange}
+                  error={
+                    formik.touched.confirmPassword &&
+                    Boolean(formik.errors.confirmPassword)
+                  }
+                  helperText={
+                    formik.touched.confirmPassword &&
+                    formik.errors.confirmPassword
+                  }
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton
+                          onClick={handleShowPassword}
+                          edge="end"
+                        >
+                          {formik.values.showPassword ? (
+                            <Visibility />
+                          ) : (
+                            <VisibilityOff />
+                          )}
+                        </IconButton>
+                      </InputAdornment>
+                    ),
+                  }}
+                />
+              </Grid>
+            </Grid>
+            {isLoading ? (
+              <CircularProgress size={24} />
+            ) : (
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                color="primary"
+                sx={{ marginTop: 4 }}
+              >
+                Change Password
+              </Button>
+            )}
+          </form>
+        </CardContent>
+      </Card>
+    </Container>
+  );
+};
 
-                <Form.Group className='my-2' controlId='email'>
-                    <Form.Label>Email</Form.Label>
-                    <Form.Control type='email' placeholder='email@sample.com'
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}></Form.Control>
-                </Form.Group>
-
-                <Form.Group className='my-2' controlId='password'>
-                    <Form.Label>Password</Form.Label>
-                    <Form.Control type='password' placeholder='Set Password'
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}></Form.Control>
-                </Form.Group>
-
-                <Form.Group className='my-2' controlId='confirmPassword'>
-                    <Form.Label>Confirm Password</Form.Label>
-                    <Form.Control type='password' placeholder='Confirm Password'
-                    value={confirmPassword}
-                    onChange={(e) => setConfirmPassword(e.target.value)}></Form.Control>
-                </Form.Group>
-
-                {isLoading && <Loader />}
-
-                <Button type='submit' variant='primary' className='mt-3'>
-                    Sign Up
-                </Button>
-            </Form>
-        </FormContainer>
-    </>
-  )
-}
-
-export default RegisterPage
+export default RegisterPage;
