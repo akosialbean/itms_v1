@@ -141,18 +141,12 @@ function Header({ toggleThemeMode, themeMode }) {
             <>
               {/* Use LinkContainer for navigation */}
               <LinkContainer to="/">
-                <Button
-                  color="inherit"
-                  startIcon={<BarChartIcon />}
-                >
+                <Button color="inherit" startIcon={<BarChartIcon />}>
                   Dashboard
                 </Button>
               </LinkContainer>
               <LinkContainer to="/devices">
-                <Button
-                  color="inherit"
-                  startIcon={<DevicesIcon />}
-                >
+                <Button color="inherit" startIcon={<DevicesIcon />}>
                   Devices
                 </Button>
               </LinkContainer>
@@ -167,7 +161,7 @@ function Header({ toggleThemeMode, themeMode }) {
                   )
                 }
               >
-                {themeMode === 'dark' ? 'Light' : 'Dark'}
+                {themeMode === "dark" ? "Light" : "Dark"}
               </Button>
 
               <Button
@@ -195,15 +189,30 @@ function Header({ toggleThemeMode, themeMode }) {
             </>
           )}
           {!userInfo && (
-            // Use LinkContainer for navigation
-            <LinkContainer to="/login">
+            <>
               <Button
                 color="inherit"
-                sx={{ textDecoration: "none", color: "inherit" }}
+                onClick={toggleThemeMode}
+                startIcon={
+                  themeMode === "dark" ? (
+                    <Brightness4Icon />
+                  ) : (
+                    <Brightness7Icon />
+                  )
+                }
               >
-                Login
+                {themeMode === "dark" ? "Light" : "Dark"}
               </Button>
-            </LinkContainer>
+              {/* Use LinkContainer for navigation */}
+              <LinkContainer to="/login">
+                <Button
+                  color="inherit"
+                  sx={{ textDecoration: "none", color: "inherit" }}
+                >
+                  Login
+                </Button>
+              </LinkContainer>
+            </>
           )}
         </Hidden>
       </Toolbar>
