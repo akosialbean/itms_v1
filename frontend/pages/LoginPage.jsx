@@ -128,15 +128,6 @@ const LoginPage = () => {
                 Sign In
               </Button>
             )}
-
-            <Grid container justifyContent="flex-end">
-              <Grid item 
-                sx={{ marginTop: 4 }}>
-                <Link component={RouterLink} to="/register" variant="body2">
-                  New User? Register
-                </Link>
-              </Grid>
-            </Grid>
           </form>
         </CardContent>
       </Card>
