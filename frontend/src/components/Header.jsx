@@ -16,6 +16,7 @@ import {
   MenuItem,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import Brightness4Icon from "@mui/icons-material/Brightness4";
 import Brightness7Icon from "@mui/icons-material/Brightness7";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
@@ -67,7 +68,7 @@ function Header({ toggleThemeMode, themeMode }) {
           variant="h6"
           noWrap
           component={Link}
-          to="/"
+          to="/hero"
           sx={{ textDecoration: "none", color: "inherit" }}
         >
           <img
@@ -169,6 +170,7 @@ function Header({ toggleThemeMode, themeMode }) {
                 onClick={handleUsernameClick}
                 aria-controls="user-menu"
                 aria-haspopup="true"
+                startIcon={<AccountCircleIcon />}
                 endIcon={<ArrowDropDownIcon />}
               >
                 {userInfo.name}
